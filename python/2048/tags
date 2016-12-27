@@ -1,0 +1,66 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+GameField	GameField.py	/^class GameField(object):$/;"	c
+GameField	m2048.py	/^class GameField():$/;"	c
+__init__	GameField.py	/^    def __init__(self, height=4, width=4, win=2048):$/;"	m	class:GameField
+__init__	m2048.py	/^	def __init__(self,screen):$/;"	m	class:GameField
+actions	GameField.py	/^actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']$/;"	v
+actions_dict	GameField.py	/^actions_dict = dict(zip(letter_codes, actions * 2))$/;"	v
+and	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+cast	GameField.py	/^        def cast(string):$/;"	f	function:GameField.draw
+change	GameField.py	/^            def change(i): # true if there'll be change in i-th tile$/;"	f	function:GameField.move_is_possible.row_is_left_movable
+choice	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+convertupdown	m2048.py	/^		def convertupdown():#switch the upside blocks and the downside blocks$/;"	f	function:GameField.move
+curses	GameField.py	/^import curses$/;"	i
+curses	m2048.py	/^import curses$/;"	i
+defaultdict	GameField.py	/^from collections import defaultdict$/;"	i
+draw	GameField.py	/^    def draw(self, screen):$/;"	m	class:GameField
+draw	m2048.py	/^	def draw(self):$/;"	m	class:GameField
+draw_hor_separator	GameField.py	/^        def draw_hor_separator():$/;"	f	function:GameField.draw
+draw_hor_separator	m2048.py	/^		def draw_hor_separator():	$/;"	f	function:GameField.draw
+draw_row	GameField.py	/^        def draw_row(row):$/;"	f	function:GameField.draw
+draw_row	m2048.py	/^		def draw_row(row):	$/;"	f	function:GameField.draw
+fun	GameField.py	/^def fun(stdscr):$/;"	f
+fun	m2048.py	/^	def fun(stdscr):$/;"	f
+game	GameField.py	/^    def game():$/;"	f	function:main
+gameover	m2048.py	/^	def gameover(self,state):$/;"	m	class:GameField
+generate	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+get_user_action	GameField.py	/^def get_user_action(keyboard):    $/;"	f
+getuserkey	m2048.py	/^	def getuserkey(self):$/;"	m	class:GameField
+init	GameField.py	/^    def init():$/;"	f	function:main
+invert	GameField.py	/^def invert(field):$/;"	f
+invert	m2048.py	/^		def invert():#transpose the matrix around its counter diagnal line$/;"	f	function:GameField.move
+isOver	m2048.py	/^		def isOver():#check if the player lose$/;"	f	function:GameField.step
+isWin	m2048.py	/^		def isWin():#check if the player win$/;"	f	function:GameField.step
+is_gameover	GameField.py	/^    def is_gameover(self):$/;"	m	class:GameField
+is_win	GameField.py	/^    def is_win(self):$/;"	m	class:GameField
+letter_codes	GameField.py	/^letter_codes = [ord(ch) for ch in 'WASDRQwasdrq']$/;"	v
+main	GameField.py	/^def main(stdscr):$/;"	f
+merge	GameField.py	/^            def merge(row):$/;"	f	function:GameField.move.move_row_left
+merge	m2048.py	/^		def merge():#operation of moving the gamefield upward$/;"	f	function:GameField.move
+move	GameField.py	/^    def move(self, direction):$/;"	m	class:GameField
+move	m2048.py	/^	def move(self,direction):$/;"	m	class:GameField
+move_is_possible	GameField.py	/^    def move_is_possible(self, direction):$/;"	m	class:GameField
+move_row_left	GameField.py	/^        def move_row_left(row):$/;"	f	function:GameField.move
+new	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+nextstate	m2048.py	/^def nextstate(state,gamefield):$/;"	f
+not_game	GameField.py	/^    def not_game(state):$/;"	f	function:main
+os	GameField.py	/^import os$/;"	i
+os	m2048.py	/^import os$/;"	i
+place	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+randrange	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+randrange	m2048.py	/^from random import randrange$/;"	i
+reset	GameField.py	/^    def reset(self):$/;"	m	class:GameField
+reset	m2048.py	/^	def reset(self):$/;"	m	class:GameField
+row_is_left_movable	GameField.py	/^        def row_is_left_movable(row): $/;"	f	function:GameField.move_is_possible
+spawn	GameField.py	/^    def spawn(self):$/;"	m	class:GameField
+spawn	m2048.py	/^	def spawn(self,state):$/;"	m	class:GameField
+step	m2048.py	/^	def step(self):$/;"	m	class:GameField
+tighten	GameField.py	/^            def tighten(row): # squeese non-zero elements together$/;"	f	function:GameField.move.move_row_left
+tile	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
+transpose	GameField.py	/^def transpose(field):$/;"	f
+transpose	m2048.py	/^		def transpose():#transpose the matrix gamefield around its diagnal line$/;"	f	function:GameField.move
