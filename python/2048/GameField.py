@@ -5,6 +5,7 @@
 #import curses
 import os
 import curses
+# import vimpdb
 from random import randrange, choice # generate and place new tile
 from collections import defaultdict
 
@@ -211,7 +212,9 @@ def main(stdscr):
     curses.use_default_colors()
     game_field = GameField(win=32)
 
-
+#    import vimpdb
+#    vimpdb.set_trace()
+#	pdb.set_trace()
     state = 'Init'
 
     while state != 'Exit':

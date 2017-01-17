@@ -1,13 +1,9 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
-!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_SORTED	2	/0=unsorted, 1=sorted, 2=foldcase/
 !_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-GameField	GameField.py	/^class GameField(object):$/;"	c
-GameField	m2048.py	/^class GameField():$/;"	c
-__init__	GameField.py	/^    def __init__(self, height=4, width=4, win=2048):$/;"	m	class:GameField
-__init__	m2048.py	/^	def __init__(self,screen):$/;"	m	class:GameField
 actions	GameField.py	/^actions = ['Up', 'Left', 'Down', 'Right', 'Restart', 'Exit']$/;"	v
 actions_dict	GameField.py	/^actions_dict = dict(zip(letter_codes, actions * 2))$/;"	v
 and	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
@@ -27,10 +23,12 @@ draw_row	m2048.py	/^		def draw_row(row):	$/;"	f	function:GameField.draw
 fun	GameField.py	/^def fun(stdscr):$/;"	f
 fun	m2048.py	/^	def fun(stdscr):$/;"	f
 game	GameField.py	/^    def game():$/;"	f	function:main
+GameField	GameField.py	/^class GameField(object):$/;"	c
+GameField	m2048.py	/^class GameField():$/;"	c
 gameover	m2048.py	/^	def gameover(self,state):$/;"	m	class:GameField
 generate	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
-get_user_action	GameField.py	/^def get_user_action(keyboard):    $/;"	f
 getuserkey	m2048.py	/^	def getuserkey(self):$/;"	m	class:GameField
+get_user_action	GameField.py	/^def get_user_action(keyboard):    $/;"	f
 init	GameField.py	/^    def init():$/;"	f	function:main
 invert	GameField.py	/^def invert(field):$/;"	f
 invert	m2048.py	/^		def invert():#transpose the matrix around its counter diagnal line$/;"	f	function:GameField.move
@@ -64,3 +62,5 @@ tighten	GameField.py	/^            def tighten(row): # squeese non-zero elements
 tile	GameField.py	/^from random import randrange, choice # generate and place new tile$/;"	i
 transpose	GameField.py	/^def transpose(field):$/;"	f
 transpose	m2048.py	/^		def transpose():#transpose the matrix gamefield around its diagnal line$/;"	f	function:GameField.move
+__init__	GameField.py	/^    def __init__(self, height=4, width=4, win=2048):$/;"	m	class:GameField
+__init__	m2048.py	/^	def __init__(self,screen):$/;"	m	class:GameField

@@ -1,11 +1,6 @@
-/home/coin/Desktop/learn-coding/projects/python/2048
-/home/coin/Desktop/learn-coding/projects/python/2048/cscope.files
-/home/coin/Desktop/learn-coding/projects/python/2048/cscope.po.out
-/home/coin/Desktop/learn-coding/projects/python/2048/.m2048.py.swp
-/home/coin/Desktop/learn-coding/projects/python/2048/cscope.out
-/home/coin/Desktop/learn-coding/projects/python/2048/m2048.py
-/home/coin/Desktop/learn-coding/projects/python/2048/vimpro
-/home/coin/Desktop/learn-coding/projects/python/2048/tags
-/home/coin/Desktop/learn-coding/projects/python/2048/cscope.in.out
-/home/coin/Desktop/learn-coding/projects/python/2048/GameField.py
-/home/coin/Desktop/learn-coding/projects/python/2048/cscope.file
+./cscope.files
+./.m2048.py.swp
+./m2048.py
+./vimpro
+./tags
+./GameField.py

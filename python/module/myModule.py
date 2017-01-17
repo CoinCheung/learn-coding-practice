@@ -6,6 +6,9 @@
 
 #pdb.set_trace()
 
+#import vimpdb
+#vimpdb.set_trace()
+
 if __name__ =='__main__':  # attention should be paid that double underscore is used instead single underscore
 	print "the module 'myModule is running itself'"
 else:

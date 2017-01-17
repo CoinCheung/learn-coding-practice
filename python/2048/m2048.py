@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#/usr/bin/python
 #filename:2048.py
 
 
@@ -29,7 +29,7 @@ class GameField():
 		self.field=[[0 for i in range(self.width)] for j in range(self.height)]
 		self.spawn('Init')
 		self.spawn('Init')
-		
+
 	#choose a block and fill in number
 	def spawn(self,state):
 		if state=='Init': #if the state is Init 4 or 2 is generate, otherwise 2
@@ -48,14 +48,14 @@ class GameField():
 	def draw(self):
 		HelpString1='(W)up (S)down (A)left (D)right'
 		HelpString2='(R)restart (Q)quit'
-		
+
 		#method of drawing the horizontal separator
-		def draw_hor_separator():	
+		def draw_hor_separator():
 			line='+------'*self.width+'+'+os.linesep
 			self.stdscr.addstr(line)
-	
+
 		#method of drawing the row of the gamefield
-		def draw_row(row):	
+		def draw_row(row):
 			line=''.join('|{:^6}'.format(num) if num>0 else '|      ' for num in row)+'|'+os.linesep
 			self.stdscr.addstr(line)
 
@@ -66,11 +66,11 @@ class GameField():
 		for row in self.field:
 			draw_hor_separator()
 			draw_row(row)
-	
+
 		draw_hor_separator()
 		self.stdscr.addstr(HelpString1+os.linesep)
 		self.stdscr.addstr(HelpString2+os.linesep)
-	
+
 	#get the key from the user
 	def getuserkey(self):
 		ch=chr(self.stdscr.getch())
@@ -114,7 +114,7 @@ class GameField():
 		else:
 			self.spawn('Game')
 			return 'Game'
-		
+
 	#implement transformation of the gamefield
 	def move(self,direction):
 		def merge():#operation of moving the gamefield upward
@@ -137,7 +137,7 @@ class GameField():
 							if self.field[k][i]!=0:
 								self.field[j][i]=self.field[k][i]
 								self.field[k][i]=0
-								break	
+								break
 
 		def convertupdown():#switch the upside blocks and the downside blocks
 			self.field.reverse()
@@ -147,7 +147,7 @@ class GameField():
 			#	self.field[i]=tmp
 
 		def transpose():#transpose the matrix gamefield around its diagnal line
-			self.field=[[token[i] for token in self.field] for i in range(0,self.width)]		
+			self.field=[[token[i] for token in self.field] for i in range(0,self.width)]
 			self.height=self.height^self.width
 			self.width=self.height^self.width
 			self.height=self.height^self.width
@@ -195,7 +195,7 @@ class GameField():
 #-------------------------------------------#
 def nextstate(state,gamefield):
 	#procedure of state switch
-	if state=='Init' or state=='Restart': 
+	if state=='Init' or state=='Restart':
 		gamefield.reset()
 		gamefield.draw()
 		return 'Game'
@@ -223,7 +223,7 @@ else:
 		state='Init'
 		while state!='Exit':
 			state=nextstate(state,gamefield)
-	
+
 	curses.wrapper(fun)
 
 
