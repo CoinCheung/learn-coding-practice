@@ -5,4 +5,6 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 main	dd.cpp	/^int main(){$/;"	f
-main	new.cpp	/^int main(){$/;"	f
+main	new.cpp	/^int main()$/;"	f
+print	new.cpp	/^void print(){$/;"	f
+printXXX	new.cpp	/^void printXXX(){$/;"	f

@@ -4,7 +4,7 @@
 import wx
 
 '''
-create a window 
+create a window
 '''
 #-------------------------------------------#
 #method one: use wx.Frame()

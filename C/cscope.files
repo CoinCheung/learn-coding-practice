@@ -5,6 +5,4 @@
 ./tags
 ./1
 ./makefile
-./dd.o
 ./dd
-./.dd.cpp.swp

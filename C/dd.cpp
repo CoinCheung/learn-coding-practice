@@ -4,12 +4,13 @@ using namespace std;
 
 
 int main(){
-	
-//	for(int i=0;i<13;i++){
-		
-//		cout<<"this is "<<i<<endl;
-//	}
+    	
+    //	for(int i=0;i<13;i++){
+            
+    //		cout<<"this is "<<i<<endl;
+    //	}
 
+    //print();
 	int a=3;
 	if(a==0)
 		cout<<"a==0!"<<endl;
