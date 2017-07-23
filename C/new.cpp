@@ -1,7 +1,11 @@
 #include<iostream>
 
+#ifndef DD
+#define DD
 
 using namespace std;
+
+#endif
 
 void print(){
     int a=0;

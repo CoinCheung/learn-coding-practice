@@ -219,8 +219,8 @@ class Ui_MainWindow(object):
         self.label_4.setGeometry(QtCore.QRect(20, 480, 271, 61))
         self.label_4.setWordWrap(True)
         self.label_4.setObjectName("label_4")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(350, 490, 101, 31))
+        self.NewGameButton = QtWidgets.QPushButton(self.centralwidget)
+        self.NewGameButton.setGeometry(QtCore.QRect(350, 490, 101, 31))
         font = QtGui.QFont()
         font.setFamily("DejaVu Sans")
         font.setPointSize(12)
@@ -228,14 +228,14 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setUnderline(False)
         font.setWeight(50)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet("alternate-background-color: rgb(170, 170, 0);\n"
+        self.NewGameButton.setFont(font)
+        self.NewGameButton.setStyleSheet("alternate-background-color: rgb(170, 170, 0);\n"
 "font: 12pt \"DejaVu Sans\";\n"
 "background-color: rgb(170, 170, 127);")
-        self.pushButton.setObjectName("pushButton")
+        self.NewGameButton.setObjectName("NewGameButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 504, 19))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 504, 20))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -243,6 +243,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        self.NewGameButton.clicked.connect(MainWindow.NewGame)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -253,5 +254,5 @@ class Ui_MainWindow(object):
         self.scorelabel.setText(_translate("MainWindow", "2048"))
         self.label.setText(_translate("MainWindow", "move and merge the numers for 2048"))
         self.label_4.setText(_translate("MainWindow", "Tips: press up, down, left or right to move the blocks. Two blocks will merge if they are neighbors and have the same number."))
-        self.pushButton.setText(_translate("MainWindow", "New Game"))
+        self.NewGameButton.setText(_translate("MainWindow", "New Game"))
 

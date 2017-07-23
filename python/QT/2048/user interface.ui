@@ -186,6 +186,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
         <property name="margin">
          <number>0</number>
         </property>
@@ -209,6 +212,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="2" column="0">
@@ -225,6 +231,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -243,6 +252,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="1" column="1">
@@ -259,6 +271,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -278,6 +293,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="3" column="1">
@@ -294,6 +312,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -312,6 +333,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="1" column="3">
@@ -328,6 +352,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -346,6 +373,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="0" column="3">
@@ -362,6 +392,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -380,6 +413,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="3" column="3">
@@ -396,6 +432,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -414,6 +453,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="2" column="3">
@@ -431,6 +473,9 @@ background-color: rgb(170, 146, 89);</string>
         <property name="text">
          <string/>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item row="2" column="1">
@@ -447,6 +492,9 @@ background-color: rgb(170, 146, 89);</string>
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -469,7 +517,7 @@ background-color: rgb(170, 146, 89);</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="NewGameButton">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -504,12 +552,33 @@ background-color: rgb(170, 170, 127);</string>
      <x>0</x>
      <y>0</y>
      <width>504</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>NewGameButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>NewGame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>521</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>511</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>signal1()</signal>
+  <slot>NewGame()</slot>
+ </slots>
 </ui>

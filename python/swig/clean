@@ -1,0 +1,5 @@
+#! /bin/bash
+
+rm -rf build
+rm -rf __pycache__
+rm *so mymod.py mymod_wrap.c

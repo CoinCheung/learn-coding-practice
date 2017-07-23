@@ -7,7 +7,7 @@ setup.py file for Swig
 
 from distutils.core import setup,Extension
 
-mymodule = Extension('_mymod',sources = ['test.c','mymod_wrap.c'])
+mymodule = Extension('_mymod',sources = ['mymod_wrap.c','test.c'])
 
 setup(
         name = 'mymod', #the name of the module to be imported in python

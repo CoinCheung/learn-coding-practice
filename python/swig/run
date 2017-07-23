@@ -1,0 +1,5 @@
+#! /bin/bash
+
+swig -python mymod.i
+#swig -python mymod.c
+python setup.py build_ext --inplace
