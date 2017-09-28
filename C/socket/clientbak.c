@@ -67,6 +67,7 @@ void main()
     }
     printf("the response from the server is:%s\n",buffer);
 
+    /* sleep(3); */
 
     close(sock_client);
 }

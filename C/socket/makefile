@@ -1,5 +1,5 @@
-all: server client
-.PHONY: all 
+all : clean server client
+.PHONY: all
 
 cc = gcc
 cflags = -c -g

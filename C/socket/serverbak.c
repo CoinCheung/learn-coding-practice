@@ -90,7 +90,7 @@ void main()
     
     write(sock_client, res, strlen(res));
 
-    
+    sleep(3);
 
     /* close the socket */
     close(sock_client);
