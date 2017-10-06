@@ -1,0 +1,144 @@
+============================================================
+the signals that EP21CAN6.dbc have but AS26HSC6.dbc do not
+============================================================
+
+OnbdChrgCPPwmDutyHSC6
+OnbdChrgCPPwmStatHSC6
+ChargerInsideTemp3HSC6
+ChrgrAltCrntLmtHSC6
+OBCShocketPosSnsrTempHSC6
+OnChrgCmdHSC6
+OnChrgngFltHSC6
+OnChrgrFltHSC6
+BMSPackSOCHSC6
+BMSPackSOCVHSC6
+BMSBscSta_h6HSC6
+BMSChgIndDriverStatHSC6
+BMSOdoFctVHSC6
+BMSOfbdChrgrPlugOn_h6HSC6
+BMSPackSOCDspV_h6HSC6
+BMSChrgngRmnngStTime_h6HSC6
+BMSReserStHourDspCmd_h6HSC6
+BMSWrlsChrgnFltReason_h6HSC6
+BMSWrlsChrgngResp_h6HSC6
+BMSWkupWrlsChrgrHSC6
+BMSWrlsChrgngCmdHSC6
+BMSWrlsChrgngFltHSC6
+BMSWrlsChrgngInptCrntLmtHSC6
+BMSWrlsChrgngMdHSC6
+BMSWrlsChrgngOtptCrntHSC6
+BMSWrlsChrgngOtptPwrHSC6
+BMSWrlsChrgngOtptVolHSC6
+BMSWrlsChrgngSftyHSC6
+BMSWrlsChrgrFltHSC6
+ISGInvtrCrntHSC6
+ISGInvtrCrntVHSC6
+ISGInvtrVolHSC6
+ISGInvtrVolVHSC6
+TBOXUnvslTimeCalendarDHSC6
+TBOXUnvslTimeCalendarMHSC6
+TBOXUnvslTimeCalendarYHSC6
+TBOXUnvslTimeChksmHSC6
+TBOXUnvslTimeHourOfDayHSC6
+TBOXUnvslTimeMinuteOfHHSC6
+TBOXUnvslTimeSecOfMHSC6
+TBOXWrlsChrgngReqHSC6
+CoxtyBtwnPriyAndSecyCoilFltHSC6
+CoxtyOfstPosOnXAxisHSC6
+CoxtyOfstPosOnYAxisHSC6
+FornObjDetHSC6
+FornObjPosDetOnXAxisHSC6
+FornObjPosDetOnYAxisHSC6
+WrlsChrgrActuInptCrntHSC6
+WrlsChrgrActuInptVolHSC6
+WrlsChrgrActuOtptCrntHSC6
+WrlsChrgrActuOtptVolHSC6
+WrlsChrgrGndSideStsHSC6
+WrlsChrgrStsHSC6
+WrlsChrgrVehSideStsHSC6
+WrlsChrgrWallSideStsHSC6
+WrlsChrgrWkupAHSC6
+
+============================================================
+the signals that AS26HSC6.dbc have but EP21CAN6.dbc do not
+============================================================
+
+BMSPackSOCV_h6HSC6
+BMSPackSOC_h6HSC6
+BMSBscStaHSC6
+BMSChgIngDriverStatHSC6
+BMSOfbdChrgrPlugOnHSC6
+BMSAvlblEnrg_h6HSC6
+BMSReserStHourDspCmdHSC6
+
+============================================================
+the conflict signals of EP21CAN6.dbc and AS26HSC6.dbc
+============================================================
+signal ChargerHVCurrentHSC6 has factor conflicts in the two files
+signal BMSPackCrnt_h6HSC6 has factor conflicts in the two files
+signal OnbdChrgrSktEleccLckEHSC6 has startbit conflicts in the two files
+signal BMSFlameGasStatusHSC6 has factor conflicts in the two files
+signal BMSChrgPeakPwrHSC6 has factor conflicts in the two files
+signal BMSChrgPwrLmtHSC6 has factor conflicts in the two files
+signal BMSDschrgPeakPwrHSC6 has factor conflicts in the two files
+signal BMSDschrgPwrLmtHSC6 has factor conflicts in the two files
+signal BMSReserPushItemHSC6 has startbit conflicts in the two files
+signal network_mode_h6 has startbit conflicts in the two files
+signal signal_config_id_h6 has startbit conflicts in the two files
+
+
+============================================================
+the signals that EP21CAN1.dbc have but AS26HSC1.dbc do not
+============================================================
+
+BMSBscSta_h1HSC1
+BMSOfbdChrgrPlugOn_h1HSC1
+BMSAvlblEnrgV_h1HSC1
+BMSPackSOCDspV_h1HSC1
+BMSReserStHourDspCmd_h1HSC1
+BMSChrgngRmnngStTime_h1HSC1
+BMSWrlsChrgnFltReason_h1HSC1
+BMSWrlsChrgngResp_h1HSC1
+CoxtyBtwnPriyAndSecyCoilFltHSC1
+CoxtyOfstPosOnXAxisHSC1
+CoxtyOfstPosOnYAxisHSC1
+FornObjDetHSC1
+FornObjPosDetOnXAxisHSC1
+FornObjPosDetOnYAxisHSC1
+DiagnosticFuncAddrReq_h1
+EnRunAHSC1
+EnClntTemHSC1
+EnClntTemVHSC1
+ACOnOffDspCmdHSC1
+ACPwrHSC1
+FICMWrlsChrgngReqHSC1
+VehSpdAvgDrvnHSC1
+VehSpdAvgDrvnVHSC1
+EPTStCmdOn_h1HSC1
+EPTRdy_h1HSC1
+EPTDrvngMdSwStsHSC1
+TrShftLvrPosV_h1HSC1
+TrShftLvrPos_h1HSC1
+
+============================================================
+the signals that AS26HSC1.dbc have but EP21CAN1.dbc do not
+============================================================
+
+BMSAvlblEnrgVHSC1
+BMSPackSOCDspVHSC1
+BMSPackSOCV_h1HSC1
+BMSPackSOC_h1HSC1
+DiagnosticFuncAddrReq
+EPTStCmdOnHSC1
+EPTRdyHSC1
+VehSpdAvgDrvnV_h1HSC1
+VehSpdAvgDrvn_h1HSC1
+
+============================================================
+the conflict signals of EP21CAN1.dbc and AS26HSC1.dbc
+============================================================
+signal BMSAvlblEnrg_h1HSC1 has factor conflicts in the two files
+signal BMSPackCrnt_h1HSC1 has factor conflicts in the two files
+signal FICMReserDurtnTimeHSC1 has factor conflicts in the two files
+
+

@@ -1,0 +1,134 @@
+VERSION "CellData"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS
+
+
+BO_ 961 HVBatTempMtrx: 8 BMS
+ SG_ HVBTMWM_TmpSnFV : 2|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnFM : 57|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnF : 55|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnEV : 3|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnEM : 58|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnE : 47|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnDV : 4|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnDM : 59|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnD : 39|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnCV : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnCM : 60|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnC : 31|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnBV : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnBM : 0|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnB : 23|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnAV : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnAM : 1|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBTMWM_TmpSnA : 15|8@0+ (0.5,-40) [-40|87.5] "" Vector__XXX
+ SG_ HVBTMWM_SnIndex : 63|3@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 946 HVBatCellVltMtrx2: 8 BMS
+ SG_ HVBCVM2_CellSubIDCVltV : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDCVltM : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDCVlt : 39|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDBVltV : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDBVltM : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDBVlt : 20|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDAVltV : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDAVltM : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM2_CellSubIDAVlt : 4|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM2_CellIndex : 55|4@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 945 HVBatCellVltMtrx1: 8 BMS
+ SG_ HVBCVM1_CellSubIDCVltV : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDCVltM : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDCVlt : 39|13@0+ (0.000629,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDBVltV : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDBVltM : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDBVlt : 20|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDAVltV : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDAVltM : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM1_CellSubIDAVlt : 4|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM1_CellIndex : 55|4@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 947 HVBatCellVltMtrx3: 8 BMS
+ SG_ HVBCVM3_CellSubIDCVltV : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDCVltM : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDCVlt : 39|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDBVltV : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDBVltM : 22|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDBVlt : 20|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDAVltV : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDAVltM : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM3_CellSubIDAVlt : 4|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM3_CellIndex : 55|4@0+ (1,0) [0|15] "" Vector__XXX
+
+BO_ 948 HVBatCellVltMtrx4: 8 BMS
+ SG_ HVBCVM4_CellSubIDCVltV : 5|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDCVltM : 21|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDCVlt : 39|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDBVltV : 6|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDBVltM : 22|1@0+ (1,0) [0|15] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDBVlt : 20|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDAVltV : 7|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDAVltM : 23|1@0+ (1,0) [0|1] "" Vector__XXX
+ SG_ HVBCVM4_CellSubIDAVlt : 4|13@0+ (0.000625,0) [0|5.119] "" Vector__XXX
+ SG_ HVBCVM4_CellIndex : 55|4@0+ (1,0) [0|15] "" Vector__XXX
+
+
+
+BA_DEF_ SG_  "GenSigStartValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "cycle","triger","vector_leerstring";
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 10000;
+BA_DEF_ BO_  "VtSig_bmu_mainc_stat" INT 0 0;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_DEF_  "GenSigStartValue" 0;
+BA_DEF_DEF_  "GenMsgSendType" "cycle";
+BA_DEF_DEF_  "GenMsgCycleTime" 200;
+BA_DEF_DEF_  "VtSig_bmu_mainc_stat" 0;
+BA_DEF_DEF_  "BusType" "CAN";
+BA_DEF_DEF_  "DBName" "";
+BA_ "DBName" "HS";
+BA_ "GenMsgCycleTime" BO_ 961 100;
+BA_ "GenMsgCycleTime" BO_ 946 25;
+BA_ "GenMsgCycleTime" BO_ 945 25;
+BA_ "GenMsgCycleTime" BO_ 947 25;
+BA_ "GenMsgCycleTime" BO_ 948 25;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnF 80;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnE 80;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnD 80;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnC 80;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnB 80;
+BA_ "GenSigStartValue" SG_ 961 HVBTMWM_TmpSnA 80;
+

@@ -1,0 +1,60 @@
+VERSION "HSCAN6"
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: BMS Telematics_BOX Tester HCU TC vector__xxx
+
+
+BO_ 952 BMS_Charger_HSC6_FrP01: 8 BMS
+ SG_ ChargerACCurrentHSC6 : 15|8@0+ (0.2,0) [0|50.8] "A"  vector__xxx
+ SG_ ChargerACVoltHSC6 : 23|8@0+ (2,0) [0|508] "V"  vector__xxx
+ SG_ ChargerFanStatusHSC6 : 31|2@0+ (1,0) [0|3] ""  vector__xxx
+ SG_ ChargerHVCurrentHSC6 : 25|10@0+ (0.02,0) [0|20.44] "A"  vector__xxx
+ SG_ ChargerHVRelayStatusHSC6 : 27|2@0+ (1,0) [0|3] ""  vector__xxx
+ SG_ ChargerHVVoltHSC6 : 46|15@0+ (0.02,0) [0|655.32] "V"  vector__xxx
+ SG_ ChargerStatusHSC6 : 63|4@0+ (1,0) [0|15] ""  Telematics_BOX
+ SG_ ChargerWakeUpHSC6 : 47|1@0+ (1,0) [0|1] ""  vector__xxx
+
+BO_ 954 BMS_Charger_HSC6_FrP02: 8 BMS
+ SG_ BMSCellMaxTemIndxHSC6 : 7|8@0+ (1,0) [0|254] ""  Telematics_BOX
+ SG_ BMSCellMaxVolIndxHSC6 : 23|8@0+ (1,0) [0|254] ""  Telematics_BOX
+ SG_ BMSCellMinTemIndxHSC6 : 15|8@0+ (1,0) [0|254] ""  Telematics_BOX
+ SG_ BMSCellMinVolIndxHSC6 : 31|8@0+ (1,0) [0|254] ""  Telematics_BOX
+
+BO_ 956 BMS_Charger_HSC6_FrP03: 8 BMS
+ SG_ ChargerLVCurrentHSC6 : 55|8@0+ (0.1,0) [0|25.4] "A"  vector__xxx
+ SG_ ChargerLVVoltHSC6 : 63|8@0+ (0.1,0) [0|25.4] "V"  vector__xxx
+
+BO_ 958 BMS_Charger_HSC6_FrP04: 8 BMS
+ SG_ BMSCellTemHSC6 : 15|8@0+ (1,-40) [-40|215] "

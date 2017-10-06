@@ -1,0 +1,242 @@
+============================================================
+the signals that AS26HYB.dbc have but AS24_HYB.dbc do not
+============================================================
+
+BMSCellMaxTemIndxHSC6
+BMSCellMaxVolIndxHSC6
+BMSCellMinTemIndxHSC6
+BMSCellMinVolIndxHSC6
+BMSCellTemHSC6
+BMSCellTemIndxHSC6
+BMSCellTemVHSC6
+BMSCellVolHSC6
+BMSCellVolIndxHSC6
+BMSCellVolVHSC6
+BMSMainRelaySts_h6HSC6
+BMSOfbdChrgRelayStsHSC6
+BMSOnbdChrgRelayStsHSC6
+BMSVehEmgcPwrOffHSC6
+OffbdChrgrSysKeepAwkHSC6
+OnbdChrgrSktEleccLckEHSC6
+OnbdChrgrSysKeepAwkHSC6
+ChargerVoltageHSC6
+BMSChgIngDriverStatHSC6
+BMSConIndDriverStatHSC6
+BMSCellMaxTemV_h6HSC6
+BMSCellMinTemV_h6HSC6
+BMSChrgReqHSC6
+BMSOdoFctHSC6
+BMSOfbdChrgrPlugOnHSC6
+BMSChrgSts_h6HSC6
+BMSReserDurtnTimeDspCmd_h6HSC6
+BMSReserPushItemHSC6
+BMSReserStDurtnTimeDspCmdHSC6
+BMSReserStHourDspCmdHSC6
+BMSReserStMinuteDspCmdHSC6
+BMSReserChrgCtrlDspCmdHSC6
+BMSReserChrgEnrgDspCmd_h6HSC6
+BMSReserChrgFltReasonHSC6
+BMSReserChrgFrqcDspCmdHSC6
+BMSReserChrgMdDspCmd_h6HSC6
+BMSReserChrgRespVHSC6
+BMSReserChrgRngDspCmd_h6HSC6
+BMSReserFltReasonHSC6
+BMSReserMaxCrntDspCmd_h6HSC6
+BMSReserStaDspCmdHSC6
+BMSReserTrgtSOCDspCmd_h6HSC6
+ChrgngRmnngTimeV_h6HSC6
+ChrgngRmnngTime_h6HSC6
+EPTChrgCoolngSysStsHSC6
+OfbdChrgrNgtvSktTemHSC6
+OfbdChrgrNgtvSktTemVHSC6
+OfbdChrgrPstvSktTemHSC6
+OfbdChrgrPstvSktTemVHSC6
+OnbdChrgrSktEleccLckSHSC6
+TBOXReserDurtnTimeHSC6
+TBOXReserStDayHSC6
+TBOXReserStDurtnTimeHSC6
+TBOXReserStHourHSC6
+TBOXReserStMinuteHSC6
+TBOXReserStMonthHSC6
+TBOXReserStTimeChksmHSC6
+TBOXReserStYearHSC6
+TBOXReserChrgCtrlReqHSC6
+TBOXReserChrgEnrgHSC6
+TBOXReserChrgFrqcHSC6
+TBOXReserChrgMdReqHSC6
+TBOXReserChrgRngHSC6
+TBOXReserMaxCrntHSC6
+TBOXReserTrgtSOCHSC6
+network_mode_h6
+signal_config_id_h6
+TMInvtrVolHSC6
+TMInvtrVolVHSC6
+
+============================================================
+the signals that AS24_HYB.dbc have but AS26HYB.dbc do not
+============================================================
+
+ChargerEfficiencyHSC6
+ChargerPFCRelayStatusHSC6
+ChargerInsideTemp1HSC6
+ChargerInsideTemp2HSC6
+ChargerInsideTemp3HSC6
+ChargerInsideTemp4HSC6
+ChargerOutletTempHSC6
+ChargerPFCVoltInputHSC6
+ChargerPFCVoltOutputHSC6
+ChrgrFanSpdHSC6
+BMSOnBodChrgngNotSafeHSC6
+Charger12VOCHSC6
+Charger12VOVHSC6
+Charger12VUVHSC6
+ChargerBatteryReverseHSC6
+ChargerCANMissingHSC6
+ChargerHVOVHSC6
+ChargerHVUVHSC6
+ChargerInletTempOTPHSC6
+ChargerInsideTemp1OTPHSC6
+ChargerInsideTemp2OTPHSC6
+ChargerInsideTemp3OTPHSC6
+ChargerInsideTemp4OTPHSC6
+ChargerOutletTempOTPHSC6
+ChargerOutputShortHSC6
+ChargerOverCapacityHSC6
+ChargerVinOffHSC6
+ChargerVinOVHSC6
+ChargerVinUVHSC6
+ChrgrAltCrntLmtHSC6
+ChrgrBatLVOverVolHSC6
+ChrgrBatLVUnderVolHSC6
+ChrgrFanFlrHSC6
+ChrgrHVILFlrHSC6
+ChrgrIntnlLVOverVolHSC6
+ChrgrIntnlLVUnderVolHSC6
+ChrgrPFCOverVolHSC6
+ChrgrPFCStFlrHSC6
+ChrgrPriySideHdwrOverCHSC6
+ChrgrPriySideStwrOverCHSC6
+ChrgrSecSideHdwrOverCHSC6
+ChrgrSecSideStwrOverCHSC6
+OnChrgngFltHSC6
+OnChrgrFltHSC6
+OnChrgrOffReqOfBMSHSC6
+BMSChgRelayStatusHSC6
+BMSOffbdChargerPlugOnHSC6
+BMSMainRelayStsHSC6
+ChargerEnableHSC6
+BMSVehicleEPOHSC6
+BMSClntTem_h6HSC6
+BMSPumpSts_h6HSC6
+BMSOnbdChrgEnrgV_h6HSC6
+BMSOnbdChrgEnrg_h6HSC6
+BMSPwrEfncyV_h6HSC6
+BMSPwrEfncy_h6HSC6
+HVDCDCHVSideVolHSC6
+HVDCDCHVSideVolVHSC6
+ISGInvtrCrntHSC6
+ISGInvtrCrntVHSC6
+TelmcsLclCalendarDayHSC6
+TelmcsLclCalendarMonthHSC6
+TelmcsLclCalendarYearHSC6
+TelmcsLclHourOfDayHSC6
+TelmcsLclMinuteOfHourHSC6
+TelmcsLclSecsOfMinuteHSC6
+network_mode
+signal_config_id
+
+============================================================
+the conflict signals of AS26HYB.dbc and AS24_HYB.dbc(conflicts will not be merged, signals in AS24_HYB.dbc discarded)
+============================================================
+signal ChargerInletTempHSC6 has message ID conflicts in the two files
+signal BMSBscStaHSC6 has startbit conflicts in the two files
+
+
+============================================================
+Merging process
+============================================================
+Merging Messages: 
+
+	adding message ID = 930 from AS24_HYB.dbc to AS26HYB.dbc;
+	adding message ID = 150 from AS24_HYB.dbc to AS26HYB.dbc;
+	adding message ID = 1053 from AS24_HYB.dbc to AS26HYB.dbc;
+
+
+Merging Signals: 
+
+	adding signal name = ChargerEfficiencyHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerPFCRelayStatusHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInsideTemp1HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInsideTemp2HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInsideTemp3HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellMinVolIndxHSC6;
+	adding signal name = ChargerInsideTemp4HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellMaxVolIndxHSC6;
+	adding signal name = ChargerOutletTempHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerPFCVoltInputHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerPFCVoltOutputHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChrgrFanSpdHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSOnBodChrgngNotSafeHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = Charger12VOCHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemVHSC6;
+	adding signal name = Charger12VOVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolVHSC6;
+	adding signal name = Charger12VUVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerBatteryReverseHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerCANMissingHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerHVOVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerHVUVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInletTempOTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInsideTemp1OTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChargerInsideTemp2OTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerInsideTemp3OTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerInsideTemp4OTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerOutletTempOTPHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerOutputShortHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerOverCapacityHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerVinOffHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerVinOVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemHSC6;
+	adding signal name = ChargerVinUVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChrgrAltCrntLmtHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChrgrBatLVOverVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrBatLVUnderVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrFanFlrHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrHVILFlrHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrIntnlLVOverVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrIntnlLVUnderVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrPFCOverVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellTemIndxHSC6;
+	adding signal name = ChrgrPFCStFlrHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolHSC6;
+	adding signal name = ChrgrPriySideHdwrOverCHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolHSC6;
+	adding signal name = ChrgrPriySideStwrOverCHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ChrgrSecSideHdwrOverCHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolHSC6;
+	adding signal name = ChrgrSecSideStwrOverCHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolHSC6;
+	adding signal name = OnChrgngFltHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolIndxHSC6;
+	adding signal name = OnChrgrFltHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolIndxHSC6;
+	adding signal name = OnChrgrOffReqOfBMSHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSCellVolIndxHSC6;
+	adding signal name = BMSChgRelayStatusHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSOffbdChargerPlugOnHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSMainRelayStsHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with BMSMainRelaySts_h6HSC6;
+	adding signal name = ChargerEnableHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSVehicleEPOHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSClntTem_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSPumpSts_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSOnbdChrgEnrgV_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSOnbdChrgEnrg_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSPwrEfncyV_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = BMSPwrEfncy_h6HSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = HVDCDCHVSideVolHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = HVDCDCHVSideVolVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ISGInvtrCrntHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = ISGInvtrCrntVHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclCalendarDayHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclCalendarMonthHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclCalendarYearHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclHourOfDayHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclMinuteOfHourHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = TelmcsLclSecsOfMinuteHSC6 from AS24_HYB.dbc to AS26HYB.dbc:  success
+	adding signal name = network_mode from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with signal_config_id_h6;
+	adding signal name = signal_config_id from AS24_HYB.dbc to AS26HYB.dbc:  discard due to overlap with signal_config_id_h6;
+
+
+Merging BA_DEFs: Merging BA_DEFs: Merging BA_DEFs: Merging BA_DEFs: Merging BA_DEFs: Merging BA_DEFs: 
+
+
+
+============================================================
+creating dbc with name: test_dbc_output004.dbc ... done
