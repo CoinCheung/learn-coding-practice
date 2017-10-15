@@ -37,14 +37,14 @@ big_number big_number_set(const char* nums)
         len --;
         bn.nums = (char*)malloc(len*sizeof(char));
         for(int i = 0; i < len; i ++)
-            bn.nums[i] = nums[len - i];
+            bn.nums[i] = nums[len - i] - 48;
     }
     else
     {
         bn.sign = PLUS;
         bn.nums = (char*)malloc(len*sizeof(char));
         for(int i = 0; i < len; i ++)
-            bn.nums[i] = nums[len - i -1];
+            bn.nums[i] = nums[len - i -1] - 48;
     }
 
     bn.length = len;
@@ -88,7 +88,7 @@ big_number big_number_add(const big_number a, const big_number b)
         // scenario where two number have same sign
         if(a.sign == b.sign )
         {
-            res.nums[i] += char_to_unnum(bp_large->nums[i]) + char_to_unnum(bp_small->nums[i]);
+            res.nums[i] += bp_large->nums[i] + bp_small->nums[i];
             if(res.nums[i] > 9)
             {
                 res.nums[i] -= 10;
@@ -98,20 +98,19 @@ big_number big_number_add(const big_number a, const big_number b)
         // scenario where two numbers have distinct signs
         else
         {
-            res.nums[i] += char_to_unnum(bp_large->nums[i]) - char_to_unnum(bp_small->nums[i]);
+            res.nums[i] += bp_large->nums[i] - bp_small->nums[i];
             if(res.nums[i] < 0)
             {
                 res.nums[i] += 10;
                 res.nums[i+1] --;
             }
         }
-        res.nums[i] = num_to_char(res.nums[i]);
     }
 
     // computation of extra parts larger number has to smaller one
     for(int i = len_min; i < len_max; i++) 
     {
-        res.nums[i] += char_to_unnum(bp_large->nums[i]);
+        res.nums[i] += bp_large->nums[i];
         if(res.nums[i] > 9)
         {
             res.nums[i] -= 10;
@@ -122,13 +121,13 @@ big_number big_number_add(const big_number a, const big_number b)
             res.nums[i] += 10;
             res.nums[i+1] --;
         }
-        res.nums[i] = num_to_char(res.nums[i]);
+        /* res.nums[i] = num_to_char(res.nums[i]); */
     }
 
-    res.nums[res.length-1] = num_to_char(res.nums[res.length-1]);
+    /* res.nums[res.length-1] = num_to_char(res.nums[res.length-1]); */
         
     // remove the first digits if they are zeros
-    while(res.length > 1 && res.nums[res.length-1] == '0')
+    while(res.length > 1 && res.nums[res.length-1] == 0)
         res.length --;
     res.sign = bp_large->sign;
     return res;
@@ -258,7 +257,7 @@ int big_number_cmp_nosign(const big_number a, const big_number b)
  * 
  * input:
  * return: */
-inline void sign_reverse(big_number * const bn)
+inline void sign_reverse_by(big_number * const bn)
 {
     bn->sign = (bn->sign == PLUS) ? MINUS : PLUS;
 }
@@ -268,14 +267,35 @@ inline void sign_reverse(big_number * const bn)
  * 
  * input:
  * return: */
+inline big_number sign_reverse(const big_number bn)
+{
+    big_number res;
+    
+    res.length = bn.length;
+    res.sign = (bn.sign == PLUS) ? MINUS : PLUS;
+    res.nums = (char*)malloc(sizeof(char)*bn.length);
+    memcpy(res.nums,bn.nums,bn.length);
+
+    return res;
+}
+
+
+
+/* function: 
+ * 
+ * input:
+ * return: */
 inline void big_number_print(const big_number bn)
 {
     if(bn.sign == MINUS)
-        fputs("-",stdout);
+        if(!(bn.length == 1 && bn.nums[0] == 0))
+            fputs("-",stdout);
+
     for(int i = bn.length-1; i >=0 ; i--)
-        fprintf(stdout, "%c",bn.nums[i]);
+        fprintf(stdout, "%hhd",bn.nums[i]);
     fputs("\n",stdout);
 }
+
 
 
 /* function: 
@@ -298,20 +318,17 @@ big_number big_number_mult(const big_number a, const big_number b)
     memset(res.nums, 0, res.length);
     for(int i = 0; i < a.length; i++)
         for(int j = 0; j < b.length; j++)
-            res.nums[i+j] += char_to_unnum(a.nums[i]) * char_to_unnum(b.nums[j]);
-
-    for(int i = 0; i < res.length; i++)
-    {
-        if(res.nums[i] > 9)
         {
-            res.nums[i+1] += res.nums[i]/10;
-            res.nums[i] = res.nums[i]%10;
+            res.nums[i+j] += a.nums[i] * b.nums[j];
+            if(res.nums[i+j] > 10)
+            {
+                res.nums[i+j+1] += res.nums[i+j]/10;
+                res.nums[i+j] = res.nums[i+j]%10;
+            }
         }
-        res.nums[i] = num_to_char(res.nums[i]%10);
-    }
 
     i = res.length-1;
-    while(i > 0 && res.nums[i] == '0')
+    while(i > 0 && res.nums[i] == 0)
     {
         res.length --;
         i --;
@@ -319,6 +336,8 @@ big_number big_number_mult(const big_number a, const big_number b)
 
     return res;
 }
+
+
 
 /* function: 
  * 
@@ -343,26 +362,148 @@ big_number big_number_fact(const big_number a)
     big_number multiplier;
     big_number step;
     big_number res;
-    big_number temp;
+    big_number cease;
 
-    multiplier = big_number_set("3");
-    res = big_number_set("2");
-    step = big_number_set("1");
-
-    while(big_number_cmp_sign(multiplier, a) != LARGER)
+    // positive number
+    if(a.sign == PLUS)
     {
-        temp = res;
-        res = big_number_mult(multiplier, res);
-        big_number_free(temp);
+        step = big_number_set("-1");
+        res = big_number_copy(a);
+        multiplier = big_number_add(res, step);
+        cease = big_number_set("0");
 
-        temp = multiplier;
-        multiplier = big_number_add(multiplier, step);
-        big_number_free(temp);
+        while(big_number_cmp_sign(multiplier, cease) == LARGER)
+        {
+            big_number_mult_by(&res, multiplier);
+            big_number_add_by(&multiplier, step);
+        }
+    }
+    /* else if(a.sign == MINUS) */
+    else
+    {
+        step = big_number_set("1");
+        res = big_number_copy(a);
+        multiplier = big_number_add(res, step);
+        cease = big_number_set("0");
+
+        while(big_number_cmp_sign(multiplier, cease) == SMALLER)
+        {
+            big_number_mult_by(&res, multiplier);
+            big_number_add_by(&multiplier, step);
+        }
     }
 
     big_number_free(multiplier);
+    big_number_free(cease);
     big_number_free(step);
 
     return res;
 }
+
+
+
+/* function: 
+ * 
+ * input:
+ * return: */
+big_number* big_number_divide(const big_number a, const big_number b)
+{
+    // 4/5 3%-5 10/3 10/-3 -10/3
+    big_number mid;
+    big_number dividor;
+    big_number *ret, *quo, *remain;
+    int pos_dividend;
+    int pos_quo;
+
+    dividor = sign_reverse(b);
+
+    ret = (big_number*)malloc(sizeof(big_number)*2);
+    quo = ret; // quotient
+    remain = ret + 1; // remain
+
+    mid.length = b.length;
+    mid.sign = PLUS;
+    mid.nums = (char*)malloc(sizeof(char)*(a.length));
+    mid.nums += a.length - b.length;
+
+    // scenario where dividor b is 0
+    if(b.length == 1 && b.nums[0] == 0)
+    {
+        fputs("division error: divisor should not be 0!!\n", stdout);
+        exit(0);
+    }
+
+    // scenario where dividend a is 0
+    else if(a.length == 1 && a.nums[0] == 0)
+    {
+        *quo = big_number_set("0");
+        *remain = big_number_set("0");
+    }
+
+    // scenario where quotient is 0
+    else if(a.length < b.length)
+    {
+        *quo = big_number_set("0");
+        *remain = big_number_copy(a);
+    }
+    
+    // scenario where short division is implemented
+    // get higher digits for the first division
+    else
+    {
+        quo->length = a.length - b.length + 1;
+        quo->nums = (char*)malloc(sizeof(char)*quo->length);
+        memset(quo->nums, 0, quo->length);
+
+        pos_quo = quo->length -1;
+
+        for(pos_dividend = 0; pos_dividend < mid.length; pos_dividend++)
+            mid.nums[mid.length-1-pos_dividend] = a.nums[a.length-1-pos_dividend];
+
+        while(pos_dividend <= a.length)
+        {
+            while(big_number_cmp_nosign(mid, b) != SMALLER)
+            {
+                big_number_add_by(&mid, dividor);
+                quo->nums[pos_quo]++;
+            }
+            mid.nums--;
+            mid.length++;
+            mid.nums[0] = a.nums[a.length - 1 - pos_dividend];
+            pos_quo--;
+            pos_dividend++;
+        }
+
+        *remain = big_number_copy(mid);
+        mid.nums++;
+        big_number_free(mid);
+    }
+
+    return ret;
+}
+
+
+/* function: 
+ * 
+ * input:
+ * return: */
+inline big_number big_number_copy(const big_number a)
+{
+    big_number res;
+
+    res = a;
+    res.nums = (char *)malloc(sizeof(char)*res.length);
+    memcpy(res.nums, a.nums, res.length);
+
+    return res;
+}
+
+
+// debug
+void print(const big_number a)
+{
+    big_number_print(a);
+}
+
+
 

@@ -1,4 +1,4 @@
-all: dd
+.all:dd test
 
 dd:dd.o header.o
 	g++ dd.o header.o -o dd

@@ -27,7 +27,7 @@ typedef struct big_number
 {
     // data
     int length;
-    char *nums;
+    char *nums; // higher digits have larger indices
     char sign;
 
     // functions
@@ -48,6 +48,7 @@ big_number big_number_set(const char*);
 big_number big_number_add(const big_number, const big_number); 
 big_number big_number_mult(const big_number, const big_number);
 big_number big_number_fact(const big_number);
+big_number* big_number_divide(const big_number, const big_number);
 int big_number_cmp_sign(const big_number, const big_number);
 int big_number_cmp_nosign(const big_number, const big_number);
 void big_number_add_by(big_number * const, const big_number); 
@@ -61,8 +62,13 @@ char char_to_unnum(const char ch);
 char num_to_char(const char num);
 
 // inner functions
-void sign_reverse(big_number * const);
+void sign_reverse_by(big_number * const);
+big_number sign_reverse(const big_number);
 void big_number_print(const big_number);
+big_number big_number_copy(const big_number);
+
+// debug 
+void print(const big_number);
 
 
 #endif

@@ -65,3 +65,28 @@ indices = ar[ar == best]
 print(indices)
 print('here')
 print(np.argmax(ar, axis = 1))
+
+ar = np.arange(9).reshape(3,3)
+print(np.exp(ar))
+
+print(ar[:,2])
+print(np.zeros_like(ar))
+
+ones = np.ones((3,3))
+col = np.arange(3).reshape(3,1)
+print(ar)
+print(col.T + ar)
+
+print(ar[:,2].shape)
+
+print(np.maximum(3,ar))
+
+print(np.ones((2,2)))
+
+print(1.00000e+00)
+
+
+print(ar)
+sum = np.sum(ar,axis = 1,keepdims = True)
+print(ar/sum)
+print(np.all(ar == col.T))
