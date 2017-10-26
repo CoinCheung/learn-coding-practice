@@ -121,11 +121,8 @@ big_number big_number_add(const big_number a, const big_number b)
             res.nums[i] += 10;
             res.nums[i+1] --;
         }
-        /* res.nums[i] = num_to_char(res.nums[i]); */
     }
 
-    /* res.nums[res.length-1] = num_to_char(res.nums[res.length-1]); */
-        
     // remove the first digits if they are zeros
     while(res.length > 1 && res.nums[res.length-1] == 0)
         res.length --;
@@ -408,25 +405,20 @@ big_number big_number_fact(const big_number a)
  * return: */
 big_number* big_number_divide(const big_number a, const big_number b)
 {
-    // 4/5 3%-5 10/3 10/-3 -10/3
     big_number mid;
+    big_number temp;
     big_number dividor;
     big_number *ret, *quo, *remain;
     int pos_dividend;
     int pos_quo;
+    int i;
 
-    dividor = sign_reverse(b);
 
     ret = (big_number*)malloc(sizeof(big_number)*2);
     quo = ret; // quotient
     remain = ret + 1; // remain
 
-    mid.length = b.length;
-    mid.sign = PLUS;
-    mid.nums = (char*)malloc(sizeof(char)*(a.length));
-    mid.nums += a.length - b.length;
-
-    // scenario where dividor b is 0
+    // scenario where divider b is 0
     if(b.length == 1 && b.nums[0] == 0)
     {
         fputs("division error: divisor should not be 0!!\n", stdout);
@@ -441,42 +433,86 @@ big_number* big_number_divide(const big_number a, const big_number b)
     }
 
     // scenario where quotient is 0
-    else if(a.length < b.length)
+    else if(big_number_cmp_nosign(a,b) == SMALLER)
     {
         *quo = big_number_set("0");
         *remain = big_number_copy(a);
     }
     
     // scenario where short division is implemented
-    // get higher digits for the first division
     else
     {
+        // initialize relevant variables
+        dividor = big_number_copy(b);
+        dividor.sign = MINUS;
+
+        mid.length = b.length;
+        mid.sign = PLUS;
+        mid.nums = (char*)malloc(sizeof(char)*(a.length));
+        mid.nums += a.length - b.length;
+
         quo->length = a.length - b.length + 1;
         quo->nums = (char*)malloc(sizeof(char)*quo->length);
         memset(quo->nums, 0, quo->length);
 
         pos_quo = quo->length -1;
 
-        for(pos_dividend = 0; pos_dividend < mid.length; pos_dividend++)
+        // get higher digits for the first division
+        for(pos_dividend = 0; pos_dividend < b.length; pos_dividend++)
             mid.nums[mid.length-1-pos_dividend] = a.nums[a.length-1-pos_dividend];
 
+        // short division
         while(pos_dividend <= a.length)
         {
+            // try the short division quotient
             while(big_number_cmp_nosign(mid, b) != SMALLER)
             {
-                big_number_add_by(&mid, dividor);
+                // minus divider till remainder smaller than divider
+                temp = big_number_add(mid, dividor);
+                while(temp.length < mid.length)
+                {
+                    mid.nums[mid.length-1] = 0;
+                    mid.length--;
+                }
+                for(i = 0; i < temp.length; i++)
+                    mid.nums[i] = temp.nums[i];
+
+                big_number_free(temp);
                 quo->nums[pos_quo]++;
             }
-            mid.nums--;
-            mid.length++;
-            mid.nums[0] = a.nums[a.length - 1 - pos_dividend];
+
+            // update the remainder
+            if(pos_dividend < a.length)
+            {
+                mid.nums--;
+                mid.length++;
+                mid.nums[0] = a.nums[a.length - 1 - pos_dividend];
+            }
             pos_quo--;
             pos_dividend++;
         }
 
         *remain = big_number_copy(mid);
-        mid.nums++;
         big_number_free(mid);
+        big_number_free(dividor);
+
+        // get rid of the zeros in the quotient high digits
+        i = quo->length - 1;
+        while(quo->length>1 && quo->nums[i] == 0)
+        {
+            quo->length--;
+            i = quo->length - 1;
+        }
+
+        // calculate operators
+        if(a.sign != b.sign)
+        {
+            quo->sign = MINUS;
+            if(a.sign == MINUS)
+                remain->sign = MINUS;
+        }
+        else if(a.sign == MINUS)
+            remain->sign = MINUS;
     }
 
     return ret;

@@ -29,12 +29,6 @@ typedef struct big_number
     int length;
     char *nums; // higher digits have larger indices
     char sign;
-
-    // functions
-    // int (*is_larger_sign)(const struct big_number *, const struct big_number *);
-    // int (*is_larger_no_sign)(const struct big_number *, const struct big_number *);
-    // void (*sign_reverse)(struct big_number * const);
-
 }big_number;
 
 /* ======================================================
@@ -44,11 +38,10 @@ typedef struct big_number
 // functions relevant to big number
 void big_number_free(big_number);
 big_number big_number_set(const char*);
-// 增加一个直接传地址和加数进去就能实现在原来的数上加和乘的函数
 big_number big_number_add(const big_number, const big_number); 
 big_number big_number_mult(const big_number, const big_number);
 big_number big_number_fact(const big_number);
-big_number* big_number_divide(const big_number, const big_number);
+big_number* big_number_divide(const big_number, big_number);
 int big_number_cmp_sign(const big_number, const big_number);
 int big_number_cmp_nosign(const big_number, const big_number);
 void big_number_add_by(big_number * const, const big_number); 

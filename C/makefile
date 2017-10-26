@@ -4,7 +4,7 @@ dd:dd.o header.o
 	g++ dd.o header.o -o dd
 
 test: test.o header.o
-	gcc header.o test.o -o test
+	gcc header.o test.o -lm -o test
 
 test.o: test.c
 	gcc -c -g test.c  

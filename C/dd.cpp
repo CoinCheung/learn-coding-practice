@@ -3,6 +3,7 @@
 extern "C"
 {
 #include"header.h"
+#include"malloc.h"
 }
 
 
@@ -36,8 +37,27 @@ int main(){
 
     printf("hello from printf in C in main\n");
     // printA();
+
+    const char *d = "dfdfs";
+    const char *dd;
+    // const char *d;
+
+    dd = d;
 	
     printB();
+
+    int (*aaa)[5];
+
+    aaa = new int[4][5];
+    aaa[1][3] = 333;
+
+    cout << aaa[1][3] << endl;
+    delete[] aaa;
+
+    // aaa = (int(*)[5])malloc(sizeof(int)*20);
+    // free(aaa);
+
+
 	return 0;
 }
 
@@ -45,7 +65,6 @@ int main(){
 
 void printB()
 {
-    int i = 0;
 
     // for( i = 0; i < 10; i++)
         printf("hello from printB in C\n");

@@ -86,7 +86,19 @@ print(np.ones((2,2)))
 print(1.00000e+00)
 
 
+print('here')
 print(ar)
 sum = np.sum(ar,axis = 1,keepdims = True)
 print(ar/sum)
 print(np.all(ar == col.T))
+
+ind = np.arange(3)
+val = np.arange(3)
+print('here')
+print(ar)
+print(ind)
+print(val)
+res = ar[ind, val]
+print(res)
+print(ar[1:])
+print(ar[np.ones(3,dtype = np.uint32),np.arange(3)])
