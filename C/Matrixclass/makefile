@@ -1,8 +1,8 @@
 CppC = g++
 CC = gcc
 CFLAGs = -c -g -std=c99
-CppFLAGs = -c -g -std=c++11 $(shell pkg-config --cflags openblas)
-LFLAGs = -ltcmalloc -lpthread -lm $(shell pkg-config --libs openblas)
+CppFLAGs = -c -g -std=c++11 $(shell pkg-config --cflags openblas) -fno-elide-constructors -Wall
+LFLAGs = -ltcmalloc -lpthread -lm $(shell pkg-config --libs openblas) 
 ODIR = ./build
 _OBJs = test.o Matrix.o testlibs.o
 
