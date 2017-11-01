@@ -60,35 +60,9 @@ typedef struct
  * function definitions
  * ====================================================== */
 
-// implementing multiplication of two matrices and return a new Matrix
-Matrix Matrix_dot(const Matrix, const Matrix); 
-
-// implementing dot multiplication of two matrices, works on original Matrix
-void Matrix_dot_by(Matrix *, const Matrix); 
-
-// implementing add operation of two matrices and return a new Matrix
-Matrix Matrix_add(const Matrix, const Matrix); 
-
-// implementing add one matrix directly to another one
-void Matrix_add_by(Matrix *, const Matrix); 
 
 // reverse the sign of all elements of a matrix
 void Matrix_sign_reverse(Matrix *);
-
-// transpose a matrx
-void Matrix_transpose(Matrix *);
-
-// calculate hadmard product of one matrix by another, directly
-void Matrix_multi_by(Matrix*, const Matrix);
-
-// calculate hadmard product of one matrix by another, return new
-Matrix Matrix_multi(const Matrix, const Matrix);
-
-// calculate hadmard division of one matrix by another, directly
-void Matrix_divide_by(Matrix*, const Matrix);
-
-// calculate hadmard division of one matrix by another, return new
-Matrix Matrix_divide(const Matrix, const Matrix);
 
 // calculate exp() of all the elements of a Matrix on the original
 void Matrix_exp_ele_by(Matrix*);
@@ -111,14 +85,6 @@ void Matrix_sum_axis_by(Matrix*, const int);
 // compute the sum of all the elements of the matrix
 double Matrix_sum_all(const Matrix);
 
-// scale all elements of the matrix, works on the original matrix
-void Matrix_scale_by(Matrix*, const double);
-
-// scale all elements of the matrix, and return a new one
-Matrix Matrix_scale(const Matrix, const double);
-
-// free the memory the matrix takes up
-void Matrix_free(Matrix); 
 
 // create a Matrix of size (N,D) without values assigned
 Matrix Matrix_create(const int, const int);
@@ -147,29 +113,12 @@ Matrix Matrix_copy(const Matrix);
 // set the value of one element of the Matrix
 void Matrix_set(const Matrix, const int, const int, const double); 
 
-// print the Matrix to screen
-void Matrix_print(const Matrix); 
-
-// reshape the Matrix
-void Matrix_reshape(Matrix * const, const int, const int); 
-
-// create a Matrix with all values to be 1
-Matrix Matrix_ones(const int, const int);
-
-// create a Matrix with all values to be 0
-Matrix Matrix_zeros(const int, const int);
-
 // create a identity Matrix 
 Matrix Matrix_eye(const int);
 
 // create a Matrix whose elements are gaussian random numbers 
 Matrix Matrix_gaussian(const int, const int);
 
-// create a 1-D Matrix with values from 0 to B-1
-Matrix Matrix_range(const int);
-
-// create a 1-D Matrix with values from A to B-1
-Matrix Matrix_range2(const int, const int);
 
 
 #endif

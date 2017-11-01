@@ -2,7 +2,9 @@
 #define _MATRIX_H_
 
 /* 
- * only basic data types supported
+ * only basic data types supported: double
+ * operators are overloaded so that it looks like numpy. However some difference are such as: 
+ * 1. it is correct to use b = a*2, but incorrect to use b = 2*a.
  *  */
 
 /* ********************************************************* 
@@ -34,10 +36,14 @@ using std::memset;
  * macros and types
  ********************************************************* */
 
+#define max(x,y) ((x)>(y)?(x):(y))
+#define min(x,y) ((x)<(y)?(x):(y))
+
 
 /* ********************************************************* 
  * definitions
  ********************************************************* */
+
 template <class T>
 class Matrix2
 {
@@ -60,10 +66,11 @@ class Matrix2
         Matrix2& operator=(Matrix2&& m); // moving assignment
 
         static Matrix2 ones(const int N, const int D);
-        static Matrix2 ones(const int N);
-
+        static Matrix2 ones(const long N);
         static Matrix2 zeros(const int N, const int D);
-        static Matrix2 zeros(int N);
+        static Matrix2 zeros(const long N);
+        static Matrix2 arange(const int N);
+        static Matrix2 arange(const int a, const int b);
 
         void print();
         void free();
@@ -71,8 +78,28 @@ class Matrix2
         static Matrix2 dot(const Matrix2& a, const Matrix2& b);
         Matrix2 dot(const Matrix2& m);
 
-        Matrix2& operator*(const Matrix2& m);
-        Matrix2& operator*(const T m);
+        Matrix2 operator*(const Matrix2& m);
+        Matrix2 operator*(const T m);
+        Matrix2 operator/(const Matrix2& m);
+        Matrix2 operator/(const T m);
+        Matrix2 operator+(const Matrix2& m);
+        Matrix2 operator+(const T m);
+        Matrix2 operator-(const Matrix2& m);
+        Matrix2 operator-(const T m);
+
+        template<class C>
+        friend Matrix2<C> operator*(const C n, const Matrix2<C>& m);
+        template<class C>
+        friend Matrix2<C> operator/(const C n, const Matrix2<C>& m);
+        template<class C>
+        friend Matrix2<C> operator+(const C n, const Matrix2<C>& m);
+        template<class C>
+        friend Matrix2<C> operator-(const C n, const Matrix2<C>& m);
+
+        Matrix2 Trans();
+        static void Trans(Matrix2& m);
+        Matrix2 reshape(const int n, const int d);
+        static void reshape(Matrix2& m, const int n, const int d);
         
 };
 
@@ -139,7 +166,7 @@ Matrix2<T>::Matrix2(int n, int d): N(n), D(d), ele_num(n*d), data(new T[ele_num]
  * return:
  *  */
 template<class T>
-Matrix2<T>::Matrix2(int n): N(n), D(1), ele_num(n), data(new T[ele_num])
+Matrix2<T>::Matrix2(int n): N(1), D(n), ele_num(n), data(new T[ele_num])
 {
 }
 
@@ -167,11 +194,13 @@ Matrix2<T>::~Matrix2()
 template<class T>
 Matrix2<T>& Matrix2<T>::operator=(Matrix2<T>& m) 
 {
+    if(this != &m)
+        delete[] this->data;
+
     cout << "direct assign" <<endl;
     this->N = m.N;
     this->D = m.D;
     this->ele_num = m.ele_num;
-    delete(this->data);
     this->data = m.data;
 
     return *this;
@@ -187,6 +216,9 @@ Matrix2<T>& Matrix2<T>::operator=(Matrix2<T>& m)
 template<class T>
 Matrix2<T>& Matrix2<T>::operator=(Matrix2<T>&& m)
 {
+    if(this != &m)
+        delete[] this->data;
+
     cout << "moving assign"<<endl;
     this->N = m.N;
     this->D = m.D;
@@ -221,7 +253,7 @@ Matrix2<T> Matrix2<T>::ones(const int N, const int D)
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::ones(const int N)
+Matrix2<T> Matrix2<T>::ones(const long N)
 {
     Matrix2<T> ret(N);
 
@@ -238,7 +270,7 @@ Matrix2<T> Matrix2<T>::ones(const int N)
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::zeros(int N, int D)
+Matrix2<T> Matrix2<T>::zeros(const int N, const int D)
 {
     Matrix2<T> ret(N,D);
 
@@ -256,7 +288,7 @@ Matrix2<T> Matrix2<T>::zeros(int N, int D)
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::zeros(int N)
+Matrix2<T> Matrix2<T>::zeros(const long N)
 {
     Matrix2 ret(N);
     for(long i = 0; i < ret.ele_num; i++)
@@ -265,6 +297,49 @@ Matrix2<T> Matrix2<T>::zeros(int N)
     return std::move(ret);
 }
 
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::arange(const int N)
+{
+    Matrix2<T> res(N);
+
+    for(long i = 0; i < N; i++)
+        res.data[i] = i;
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::arange(const int a, const int b)
+{
+    if(b < a)
+    {
+        cout << __FILE__ << __LINE__ << " : ERROR: For function arange(a,b), input b should be greater than a" << endl;
+        exit(0);
+    }
+
+    Matrix2<T> res(b-a);
+    long ind;
+
+    ind = 0;
+    for(long i = a; i < b; i++)
+        res.data[ind++] = i;
+
+    return std::move(res);
+}
 
 
 /* function:
@@ -353,7 +428,7 @@ Matrix2<T> Matrix2<T>::dot(const Matrix2<T>& m)
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::dot(const Matrix2<T> &a, const Matrix2 &b) 
+Matrix2<T> Matrix2<T>::dot(const Matrix2<T> &a, const Matrix2<T> &b) 
 {
     const int N = a.N;
     const int D = a.D;
@@ -402,9 +477,102 @@ Matrix2<T> Matrix2<T>::dot(const Matrix2<T> &a, const Matrix2 &b)
  * return:
  *  */
 template<class T>
-Matrix2<T>& Matrix2<T>::operator*(const Matrix2& m)
+Matrix2<T> Matrix2<T>::operator*(const Matrix2<T>& m)
 {
 
+    T temp;
+    long pos;
+
+    // scenario where two matrices have same shape
+    if(N == m.N && D == m.D) 
+    {
+        Matrix2<T> res(N,D);
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] * m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where a is one-element matrix
+    else if(N == 1 && D == 1)
+    {
+        Matrix2<T> res(m.N,m.D);
+        temp = data[0];
+        for(long i = 0; i < m.ele_num; i++)
+            res.data[i] = temp * m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where b is a one-element matrix
+    else if(m.N == 1 && m.D == 1)
+    {
+        Matrix2<T> res(N,D);
+        temp = m.data[0];
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] * temp;
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a horizontal vector
+    else if(m.N == 1 && D == m.D)
+    {
+        Matrix2 res(N,D);
+        for(int i = 0; i < m.D; i++)
+        {
+            temp = m.data[i];
+            pos = i;
+            for(int j = 0; j < N; j++, pos+=D)
+                res.data[pos] = data[pos] * temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a vertical vector
+    else if(N == m.N && m.D == 1) 
+    {
+        Matrix2 res(N,D);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = m.data[i];
+            for(int j = 0; j < D; j++, pos++)
+                res.data[pos] = data[pos] * temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a horizontal vector and b is a Matrix
+    else if(N == 1 && D == m.D)
+    {
+        Matrix2<T> res(m.N,m.D);
+        for(int i = 0; i < m.D; i++)
+        {
+            pos = i;
+            temp = data[i];
+            for(int j = 0; j < m.N; j++, pos+=D)
+                res.data[pos] = temp * m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a vertical vector and b is a Matrix
+    else if(D == 1 && N == m.N)
+    {
+        Matrix2<T> res(m.N,m.D);
+        pos = 0;
+        for(int i = 0; i < m.N; i++)
+        {
+            temp = data[i];
+            for(int j = 0; j < m.D; j++, pos++)
+                res.data[pos] = temp * m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    else
+    {
+        cout << __FILE__ << ":" << __LINE__ <<" : ERROR: Matrix * requires input matrices have associated shapes" << endl;
+        exit(0);
+    }
 }
 
 
@@ -415,14 +583,545 @@ Matrix2<T>& Matrix2<T>::operator*(const Matrix2& m)
  * return:
  *  */
 template<class T>
-Matrix2<T>& Matrix2<T>::operator*(const T m)
+Matrix2<T> Matrix2<T>::operator*(const T m)
 {
+    Matrix2<T> res(N,D);
     for(long i = 0; i < ele_num; i++)
-        data[i] *= m;
+        res.data[i] = data[i] * m;
 
-    Matrix2<T>&& res = std::move(*this);
+    return std::move(res);
+}
 
-    return res;
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class C>
+Matrix2<C> operator*(const C n, const Matrix2<C>& m)
+{
+    Matrix2<C> res(m.N,m.D);
+    for(long i = 0; i < m.ele_num; i++)
+        res.data[i] = m.data[i] * n;
+
+    return std::move(res);
+}
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator/(const Matrix2<T>& m)
+{
+
+    T temp;
+    long pos;
+
+    // scenario where two matrices have same shape
+    if(N == m.N && D == m.D) 
+    {
+        Matrix2<T> res(N,D);
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] / m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where a is one-element matrix
+    else if(N == 1 && D == 1)
+    {
+        Matrix2<T> res(m.N,m.D);
+        temp = data[0];
+        for(long i = 0; i < m.ele_num; i++)
+            res.data[i] = temp / m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where b is a one-element matrix
+    else if(m.N == 1 && m.D == 1)
+    {
+        Matrix2<T> res(N,D);
+        temp = m.data[0];
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] / temp;
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a horizontal vector
+    else if(m.N == 1 && D == m.D)
+    {
+        Matrix2 res(N,D);
+        for(int i = 0; i < m.D; i++)
+        {
+            temp = m.data[i];
+            pos = i;
+            for(int j = 0; j < N; j++, pos+=D)
+                res.data[pos] = data[pos] / temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a vertical vector
+    else if(N == m.N && m.D == 1) 
+    {
+        Matrix2 res(N,D);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = m.data[i];
+            for(int j = 0; j < D; j++, pos++)
+                res.data[pos] = data[pos] / temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a horizontal vector and b is a Matrix
+    else if(N == 1 && D == m.D)
+    {
+        Matrix2<T> res(m.N,m.D);
+        for(int i = 0; i < m.D; i++)
+        {
+            pos = i;
+            temp = data[i];
+            for(int j = 0; j < m.N; j++, pos+=D)
+                res.data[pos] = temp / m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a vertical vector and b is a Matrix
+    else if(D == 1 && N == m.N)
+    {
+        Matrix2<T> res(m.N,m.D);
+        pos = 0;
+        for(int i = 0; i < m.N; i++)
+        {
+            temp = data[i];
+            for(int j = 0; j < m.D; j++, pos++)
+                res.data[pos] = temp / m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    else
+    {
+        cout << __FILE__ << ":" << __LINE__ <<" : ERROR: Matrix / requires input matrices have associated shapes" << endl;
+        exit(0);
+    }
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator/(const T m)
+{
+    Matrix2<T> res(N,D);
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = data[i] / m;
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class C>
+Matrix2<C> operator/(const C n, const Matrix2<C>& m)
+{
+    Matrix2<C> res(m.N,m.D);
+    for(long i = 0; i < m.ele_num; i++)
+        res.data[i] = n / m.data[i];
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator+(const Matrix2<T>& m)
+{
+
+    T temp;
+    long pos;
+
+    // scenario where two matrices have same shape
+    if(N == m.N && D == m.D) 
+    {
+        Matrix2<T> res(N,D);
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] + m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where a is one-element matrix
+    else if(N == 1 && D == 1)
+    {
+        Matrix2<T> res(m.N,m.D);
+        temp = data[0];
+        for(long i = 0; i < m.ele_num; i++)
+            res.data[i] = temp + m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where b is a one-element matrix
+    else if(m.N == 1 && m.D == 1)
+    {
+        Matrix2<T> res(N,D);
+        temp = m.data[0];
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] + temp;
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a horizontal vector
+    else if(m.N == 1 && D == m.D)
+    {
+        Matrix2 res(N,D);
+        for(int i = 0; i < m.D; i++)
+        {
+            temp = m.data[i];
+            pos = i;
+            for(int j = 0; j < N; j++, pos+=D)
+                res.data[pos] = data[pos] + temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a vertical vector
+    else if(N == m.N && m.D == 1) 
+    {
+        Matrix2 res(N,D);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = m.data[i];
+            for(int j = 0; j < D; j++, pos++)
+                res.data[pos] = data[pos] + temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a horizontal vector and b is a Matrix
+    else if(N == 1 && D == m.D)
+    {
+        Matrix2<T> res(m.N,m.D);
+        for(int i = 0; i < m.D; i++)
+        {
+            pos = i;
+            temp = data[i];
+            for(int j = 0; j < m.N; j++, pos+=D)
+                res.data[pos] = temp + m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a vertical vector and b is a Matrix
+    else if(D == 1 && N == m.N)
+    {
+        Matrix2<T> res(m.N,m.D);
+        pos = 0;
+        for(int i = 0; i < m.N; i++)
+        {
+            temp = data[i];
+            for(int j = 0; j < m.D; j++, pos++)
+                res.data[pos] = temp + m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    else
+    {
+        cout << __FILE__ << ":" << __LINE__ <<" : ERROR: Matrix + requires input matrices have associated shapes" << endl;
+        exit(0);
+    }
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator+(const T m)
+{
+    Matrix2<T> res(N,D);
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = data[i] + m;
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class C>
+Matrix2<C> operator+(const C n, const Matrix2<C>& m)
+{
+    Matrix2<C> res(m.N,m.D);
+    for(long i = 0; i < m.ele_num; i++)
+        res.data[i] = n + m.data[i];
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator-(const Matrix2<T>& m)
+{
+
+    T temp;
+    long pos;
+
+    // scenario where two matrices have same shape
+    if(N == m.N && D == m.D) 
+    {
+        Matrix2<T> res(N,D);
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] - m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where a is one-element matrix
+    else if(N == 1 && D == 1)
+    {
+        Matrix2<T> res(m.N,m.D);
+        temp = data[0];
+        for(long i = 0; i < m.ele_num; i++)
+            res.data[i] = temp - m.data[i];
+        return std::move(res);
+    }
+
+    // scenario where b is a one-element matrix
+    else if(m.N == 1 && m.D == 1)
+    {
+        Matrix2<T> res(N,D);
+        temp = m.data[0];
+        for(long i = 0; i < ele_num; i++)
+            res.data[i] = data[i] - temp;
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a horizontal vector
+    else if(m.N == 1 && D == m.D)
+    {
+        Matrix2 res(N,D);
+        for(int i = 0; i < m.D; i++)
+        {
+            temp = m.data[i];
+            pos = i;
+            for(int j = 0; j < N; j++, pos+=D)
+                res.data[pos] = data[pos] - temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a matrix and b is a vertical vector
+    else if(N == m.N && m.D == 1) 
+    {
+        Matrix2 res(N,D);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = m.data[i];
+            for(int j = 0; j < D; j++, pos++)
+                res.data[pos] = data[pos] - temp;
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a horizontal vector and b is a Matrix
+    else if(N == 1 && D == m.D)
+    {
+        Matrix2<T> res(m.N,m.D);
+        for(int i = 0; i < m.D; i++)
+        {
+            pos = i;
+            temp = data[i];
+            for(int j = 0; j < m.N; j++, pos+=D)
+                res.data[pos] = temp - m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    // scenario where a is a vertical vector and b is a Matrix
+    else if(D == 1 && N == m.N)
+    {
+        Matrix2<T> res(m.N,m.D);
+        pos = 0;
+        for(int i = 0; i < m.N; i++)
+        {
+            temp = data[i];
+            for(int j = 0; j < m.D; j++, pos++)
+                res.data[pos] = temp - m.data[pos]; 
+        }
+        return std::move(res);
+    }
+
+    else
+    {
+        cout << __FILE__ << ":" << __LINE__ <<" : ERROR: Matrix + requires input matrices have associated shapes" << endl;
+        exit(0);
+    }
+}
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator-(const T m)
+{
+    Matrix2<T> res(N,D);
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = data[i] - m;
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class C>
+Matrix2<C> operator-(const C n, const Matrix2<C>& m)
+{
+    Matrix2<C> res(m.N,m.D);
+    for(long i = 0; i < m.ele_num; i++)
+        res.data[i] = n - m.data[i];
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::Trans()
+{
+    Matrix2<T> res(D,N);
+    long pos_before;
+    long pos_after;
+
+    pos_before = 0;
+    for(int i = 0; i < N; i++)
+    {
+        pos_after = i;
+        for(int j = 0; j < D; j++, pos_before++, pos_after+=N)
+            res.data[pos_after] = data[pos_before] ;
+    }
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::Trans(Matrix2<T>& m)
+{
+    T *res = new T[m.N*m.D];
+    long pos_before;
+    long pos_after;
+
+    pos_before = 0;
+    for(int i = 0; i < m.N; i++)
+    {
+        pos_after = i;
+        for(int j = 0; j < m.D; j++, pos_before++, pos_after+=m.N)
+            res[pos_after] = m.data[pos_before] ;
+    }
+
+    delete[] m.data;
+    m.data = res;
+    m.N = m.D^m.N;
+    m.D = m.D^m.N;
+    m.N = m.D^m.N;
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::reshape(const int n, const int d)
+{
+    if(n*d != N*D)
+    {
+        cout << __FILE__ << __LINE__ << " : function reshape() requires input shape n*d equaling to N*D" << endl;
+        exit(0);
+    }
+
+    Matrix2<T> res(n,d);
+    memcpy(res.data, data, sizeof(T)*ele_num);
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::reshape(Matrix2<T>& m, const int n, const int d)
+{
+    if(n*d != m.N*m.D)
+    {
+        cout << __FILE__ << __LINE__ << " : function reshape() requires input shape n*d equaling to N*D" << endl;
+        exit(0);
+    }
+
+    m.N = n;
+    m.D = d;
 }
 
 //////////////////////////
