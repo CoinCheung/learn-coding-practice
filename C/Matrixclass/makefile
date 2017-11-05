@@ -24,3 +24,5 @@ test: test.cpp
 clean:
 	rm ./build/* main
 
+mem:
+	valgrind --tool=memcheck --leak-check=full --log-file=./leak.log ./main

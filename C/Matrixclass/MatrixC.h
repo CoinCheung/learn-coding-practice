@@ -61,39 +61,8 @@ typedef struct
  * ====================================================== */
 
 
-// reverse the sign of all elements of a matrix
-void Matrix_sign_reverse(Matrix *);
-
-// calculate exp() of all the elements of a Matrix on the original
-void Matrix_exp_ele_by(Matrix*);
-
-// calculate exp() of all the elements of a Matrix, return a new one
-Matrix Matrix_exp_ele(const Matrix);
-
-// calculate ln() of all the elements of a Matrix on the original
-void Matrix_log_ele_by(Matrix*);
-
-// calculate ln() of all the elements of a Matrix, return a new one
-Matrix Matrix_log_ele(const Matrix);
-
-// compute the sum of a matrix along given axis
-Matrix Matrix_sum_axis(const Matrix, const int);
-
-// compute the sum of a matrix along given axis, change given matrix
-void Matrix_sum_axis_by(Matrix*, const int);
-
-// compute the sum of all the elements of the matrix
-double Matrix_sum_all(const Matrix);
 
 
-// create a Matrix of size (N,D) without values assigned
-Matrix Matrix_create(const int, const int);
-
-// get the maximal value of a matrix along a given dimension
-Matrix Matrix_max_axis(const Matrix, int); 
-
-// get the maximal value of all the elements of one matrix
-double Matrix_max_all(const Matrix); 
 
 // get the minimal value of a matrix along a given dimension
 Matrix Matrix_min_axis(const Matrix, const int axis);
@@ -109,12 +78,6 @@ Matrix Matrix_pick_eles(const Matrix, const Matrix, const Matrix);
 
 //deep copy a Matrix
 Matrix Matrix_copy(const Matrix); 
-
-// set the value of one element of the Matrix
-void Matrix_set(const Matrix, const int, const int, const double); 
-
-// create a identity Matrix 
-Matrix Matrix_eye(const int);
 
 // create a Matrix whose elements are gaussian random numbers 
 Matrix Matrix_gaussian(const int, const int);

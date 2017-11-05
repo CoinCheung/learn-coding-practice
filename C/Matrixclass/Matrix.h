@@ -12,6 +12,7 @@
  ********************************************************* */
 #include<iostream>
 #include<cstring> // memcpy
+#include<cmath>
 
 extern "C"
 {
@@ -36,14 +37,45 @@ using std::memset;
  * macros and types
  ********************************************************* */
 
-#define max(x,y) ((x)>(y)?(x):(y))
-#define min(x,y) ((x)<(y)?(x):(y))
 
 
 /* ********************************************************* 
  * definitions
  ********************************************************* */
 
+
+
+/* class:
+ * instruction: 
+ *  */
+class Ind
+{
+    public:
+        long ele_num;
+        int *datax;
+        int *datay;
+
+        Ind();
+        Ind(const int num);
+        Ind(Ind&& ind);
+        ~Ind();
+
+        Ind& operator=(Ind&& ind);
+
+        void print();
+        void free();
+
+
+
+        void init(const int num);
+};
+
+
+
+
+/* class:
+ * instruction: 
+ *  */
 template <class T>
 class Matrix2
 {
@@ -71,9 +103,11 @@ class Matrix2
         static Matrix2 zeros(const long N);
         static Matrix2 arange(const int N);
         static Matrix2 arange(const int a, const int b);
+        static Matrix2 eye(const int d);
 
         void print();
         void free();
+        void init(const int N, const int D);
 
         static Matrix2 dot(const Matrix2& a, const Matrix2& b);
         Matrix2 dot(const Matrix2& m);
@@ -86,6 +120,8 @@ class Matrix2
         Matrix2 operator+(const T m);
         Matrix2 operator-(const Matrix2& m);
         Matrix2 operator-(const T m);
+        T& operator()(const int i, const int j);
+        T& operator()(const int i);
 
         template<class C>
         friend Matrix2<C> operator*(const C n, const Matrix2<C>& m);
@@ -100,14 +136,156 @@ class Matrix2
         static void Trans(Matrix2& m);
         Matrix2 reshape(const int n, const int d);
         static void reshape(Matrix2& m, const int n, const int d);
-        
+        Matrix2 Snrev();
+        static void Snrev(Matrix2& m);
+        Matrix2 exp();
+        static void exp(Matrix2& m);
+        Matrix2 log();
+        static void log(Matrix2& m);
+        Matrix2 log10();
+        static void log10(Matrix2& m);
+        Matrix2 sum(const int axis);
+        T sum();
+        Matrix2 max(const int axis);
+        T max();
+        Ind argmax(const int axis);
+        Ind argmax();
 };
-
 
 
 /* ********************************************************* 
  * implementations
  ********************************************************* */
+
+/////////////////////////////////////////////////////////
+/* Implementation of class Ind member functions */
+/////////////////////////////////////////////////////////
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind::Ind():ele_num(0), datax(NULL), datay(NULL)
+{
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind::Ind(const int num):ele_num(num), datax(new int[num]), datay(new int[num])
+{
+}
+
+
+/* function:
+ * instruction: moving construct
+ * input:
+ * return:
+ *  */
+Ind::Ind(Ind&& ind)
+{
+    cout << "Ind: moving construct" << endl;
+
+    ele_num = ind.ele_num;
+    datax = ind.datax;
+    datay = ind.datay;
+    
+    ind.datax = NULL;
+    ind.datay = NULL;
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind& Ind::operator=(Ind&& ind)
+{
+    cout << "Ind: moving assignment" << endl;
+
+    this->ele_num = ind.ele_num;
+    this->datax = ind.datax;
+    this->datay = ind.datay;
+    ind.datax = NULL;
+    ind.datay = NULL;
+
+    return *this;
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+Ind::~Ind()
+{
+    delete[] datax;
+    delete[] datay;
+    datax = NULL;
+    datay = NULL;
+}
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+void Ind::init(const int num)
+{
+    ele_num = num;
+    delete [] datax;
+    delete [] datay;
+    datax = new int[ele_num];
+    datay = new int[ele_num];
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+void Ind::print()
+{
+
+    for(long i = 0; i < ele_num; i++)
+    {
+        cout << "(" << datax[i] << ", " << datay[i] << ")" << endl;
+    }
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+void Ind::free()
+{
+    delete[] datax;
+    delete[] datay;
+    datax = NULL;
+    datay = NULL;
+}
+
+
+/////////////////////////////////////////////////////////
+/* Implementation of class Matrix2 member functions */
+/////////////////////////////////////////////////////////
 
 /* function:
  * instruction: copy construction
@@ -182,6 +360,7 @@ Matrix2<T>::~Matrix2()
 {
     cout << "deconstructing..." <<endl;
     delete[] data;
+    data = NULL;
 }
 
 
@@ -342,6 +521,28 @@ Matrix2<T> Matrix2<T>::arange(const int a, const int b)
 }
 
 
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::eye(const int d)
+{
+    Matrix2<T> res(d,d);
+    long pos;
+
+    std::memset(res.data, 0, sizeof(T)*res.ele_num);
+    pos = 0;
+    for(int i = 0; i < d; i++,pos+=d)
+        res.data[pos++] = 1;
+
+    return std::move(res);
+}
+
+
+
 /* function:
  * instruction: 
  * input:
@@ -353,12 +554,12 @@ void Matrix2<T>::print()
     long pos;
     pos = 0;
 
-    cout << "[ " <<endl;
+    cout << "[ " << endl;
     for(int i = 0; i < N; i++)
     {
         for(int j = 0; j < D; j++, pos++)
-            cout<< data[pos] << ", ";
-        cout<<endl;
+            cout << data[pos] << ", ";
+        cout << endl;
     }
     cout << "] " <<endl;
 }
@@ -378,6 +579,23 @@ void Matrix2<T>::free()
 }
 
 
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::init(const int N, const int D)
+{
+    this->N = N;
+    this->D = D;
+    this->ele_num = N*D;
+    delete[] data;
+
+    this->data = new T[this->ele_num];
+}
 
 /* function:
  * instruction: 
@@ -1036,6 +1254,38 @@ Matrix2<C> operator-(const C n, const Matrix2<C>& m)
  * return:
  *  */
 template<class T>
+T& Matrix2<T>::operator()(const int i, const int j)
+{
+    if(i >= N || j >= D)
+        cout << __FILE__ << ": " << __LINE__ << ": " << "warning: function Matrix2::operator()(const int, const int) requires the index confined within the range of the shape of the matrix (N,D), but the given index is out of range" << endl;
+
+    return data[i*D+j];
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+T& Matrix2<T>::operator()(const int i)
+{
+    if(N != 1 && D != 1)
+        cout << __FILE__ << ": " << __LINE__ << ": " << "warning: function Matrix2::operator()(const int) requires matrix have the shape of a vector, but this matrix is not a vector" << endl;
+
+    return data[i];
+}
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
 Matrix2<T> Matrix2<T>::Trans()
 {
     Matrix2<T> res(D,N);
@@ -1124,7 +1374,380 @@ void Matrix2<T>::reshape(Matrix2<T>& m, const int n, const int d)
     m.D = d;
 }
 
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::Snrev()
+{
+    Matrix2<T> res(N, D);
+
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = -data[i];
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::Snrev(Matrix2<T>& m)
+{
+    for(long i = 0; i < m.ele_num; i++)
+        m.data[i] = -m.data[i];
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::exp()
+{
+    Matrix2<T> res(N,D);
+
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = std::exp(data[i]);
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::exp(Matrix2<T>& m)
+{
+    for(long i = 0; i < m.ele_num; i++)
+        m.data[i] = std::exp(m.data[i]);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::log()
+{
+    Matrix2<T> res(N,D);
+
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = std::log(data[i]);
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::log(Matrix2& m)
+{
+    for(long i = 0; i < m.ele_num; i++)
+        m.data[i] = std::log(m.data[i]);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::log10()
+{
+    Matrix2<T> res(N,D);
+
+    for(long i = 0; i < ele_num; i++)
+        res.data[i] = std::log10(data[i]);
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+void Matrix2<T>::log10(Matrix2& m)
+{
+    for(long i = 0; i < m.ele_num; i++)
+        m.data[i] = std::log10(m.data[i]);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::sum(const int axis)
+{
+    Matrix2<T> res;
+    if(axis == 0)
+    {
+        res.init(1, D);
+        int pos;
+
+        pos = 0;
+        std::memset(res.data, 0, sizeof(T)*res.ele_num);
+        for(int i = 0; i < N; i++)
+            for(int j = 0; j < D; j++)
+                res.data[j] += data[pos++];
+    }
+
+    else if(axis == 1)
+    {
+        res.init(N, 1);
+        long pos;
+
+        std::memset(res.data, 0, sizeof(T)*res.ele_num);
+        pos = 0;
+
+        for(int i = 0; i < N; i++)
+            for(int j = 0; j < D; j++)
+                res.data[i] += data[pos++];
+    }
+
+        return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+T Matrix2<T>::sum()
+{
+    T res;
+    
+    res = 0;
+    for(long i = 0; i < ele_num; i++)
+        res += data[i];
+
+    return res;
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::max(const int axis)
+{
+    Matrix2<T> res;
+    long pos;
+
+    if(axis == 0)
+    {
+        res.init(1,D);
+        for(int i = 0; i < D; i++)
+        {
+            pos = i;
+            res.data[i] = data[pos];
+            for(int j = 0; j < N-1; j++)
+            {
+                pos += D;
+                if(data[pos] > res.data[i])
+                    res.data[i] = data[pos];
+            }
+        }
+    }
+
+    else if(axis == 1)
+    {
+        res.init(N,1);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            res.data[i] = data[pos++];
+            for(int j = 0; j < D-1; j++, pos++)
+            {
+                if(res.data[i] < data[pos])
+                    res.data[i] = data[pos];
+            }
+        }
+    }
+
+    return std::move(res);
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+T Matrix2<T>::max()
+{
+    T temp;
+
+    temp = data[0];
+    for(long i = 1; i < ele_num; i++)
+        if(temp < data[i])
+            temp = data[i];
+
+    return temp;
+}
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return: Index Matrix of relevant element
+ *  */
+template<class T>
+Ind Matrix2<T>::argmax(const int axis)
+{
+    Ind res;
+    T temp;
+    long pos;
+
+    if(axis == 0)
+    {
+        res.init(D);
+        for(int i = 0; i < D; i++)
+        {
+            pos = i;
+            temp = data[pos];
+            res.datay[i] = i;
+            res.datax[i] = 0;
+            for(int j = 0; j < N-1; j++)
+            {
+                pos += D;
+                if(data[pos] > temp)
+                {
+                    temp = data[pos];
+                    res.datax[i] = j+1;
+                }
+            }
+        }
+    }
+
+    else if(axis == 1)
+    {
+        res.init(N);
+        pos = 0;
+        for(int i = 0; i < N; i++)
+        {
+            temp = data[pos++];
+            res.datax[i] = i;
+            res.datay[i] = 0;
+            for(int j = 0; j < D-1; j++, pos++)
+            {
+                if(temp < data[pos])
+                {
+                    temp = data[pos];
+                    res.datay[i] = j+1;
+                }
+            }
+        }
+    }
+
+    return std::move(res);
+
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return: Index Matrix of relevant element
+ *  */
+template<class T>
+Ind Matrix2<T>::argmax()
+{
+    Ind res;
+    T temp;
+    long pos;
+    long count; // number of max elements
+
+    temp = data[0];
+    count = 1;
+    for(long i = 0; i < ele_num; i++)
+        if(temp > data[i])
+            continue;
+        else if(temp < data[i])
+        {
+            temp = data[i];
+            count = 1; // recount
+        }
+        else
+            count++;
+
+    res.init(count);
+
+    pos = 0;
+    count = 0;
+    for(int i = 0; i < N; i++)
+        for(int j = 0; j < D; j++, pos++)
+            if(temp == data[pos])
+            {
+                res.datax[count] = i;
+                res.datay[count] = j;
+                count++;
+            }
+
+    return std::move(res);
+
+}
+
 //////////////////////////
+
+
+
+
+
+
+
 
 class A
 {
