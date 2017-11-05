@@ -228,10 +228,10 @@ Ind::Ind(Ind&& ind)
     datax = ind.datax;
     datay = ind.datay;
     
-    ind.slice_start = 0;
-    ind.slice_end = 0;
-    ind.slice_step = 0;
-    ind.ele_num = 0;
+    // ind.slice_start = 0;
+    // ind.slice_end = 0;
+    // ind.slice_step = 0;
+    // ind.ele_num = 0;
     ind.datax = NULL;
     ind.datay = NULL;
 }
@@ -1374,8 +1374,9 @@ Matrix2<T> Matrix2<T>::operator()(Ind& ind)
  * return:
  *  */
 template<class T>
-Matrix2<T> Matrix2<T>::operator()(Ind&& ind)
+Matrix2<T> Matrix2<T>::operator()(Ind&& in)
 {
+    Ind ind = in;
     Matrix2<T> res;
     int st, ed;
     int pos;
@@ -1383,8 +1384,12 @@ Matrix2<T> Matrix2<T>::operator()(Ind&& ind)
 
     if(ind.slice_start < 0)
         st = N + ind.slice_start;
+    else
+        st = ind.slice_start;
     if(ind.slice_end <= 0)
-        ed = N + ind.slice_start;
+        ed = N + ind.slice_end;
+    else
+        ed = ind.slice_end;
     if(st < 0 || ed > N)
     {
         cout << __FILE__ << ": " << __LINE__ << ": slice indices out of range" << endl;
