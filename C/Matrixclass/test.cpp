@@ -474,5 +474,20 @@ void tryMatrix2()
     cout << "m(2,3) is: " << m(2,3) << endl;
     m.free(); n.free(); res.free(); inds.free();
 
+    m = Matrix2<double>::arange(12).reshape(12,1);
+    m(1) = 11;
+    m(2) = 11;
+    cout << "Matrix::arange(12) is: " <<endl;m.print();
+    inds = m.argmax();
+    cout << "m.argmax() is: " << endl; inds.print();
+    res = m(inds);
+    cout << "m(inds) is: " << endl; res.print();
+    m.free(); n.free(); res.free(); inds.free();
 
+    m = Matrix2<double>::arange(12).reshape(3,4);
+    // m(1) = 11;m(2) = 11;
+    cout << "Matrix::arange(12) is: " <<endl;m.print();
+    res = m(Ind::slice());
+    cout << "m(Ind::slice) is: " << endl; res.print();
+    m.free(); n.free(); res.free(); inds.free();
 }

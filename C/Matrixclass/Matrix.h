@@ -4,7 +4,8 @@
 /* 
  * only basic data types supported: double
  * operators are overloaded so that it looks like numpy. However some difference are such as: 
- * 1. it is correct to use b = a*2, but incorrect to use b = 2*a.
+ * 1. when the elements are to be accessed with indices, the normal bracelet () are used instead of regular bracelet []. 
+ * 2. slice should be used like this
  *  */
 
 /* ********************************************************* 
@@ -54,9 +55,13 @@ class Ind
         long ele_num;
         int *datax;
         int *datay;
+        int slice_start;
+        int slice_end;
+        int slice_step;
 
         Ind();
         Ind(const int num);
+        Ind(Ind& ind);
         Ind(Ind&& ind);
         ~Ind();
 
@@ -66,8 +71,8 @@ class Ind
         void free();
 
 
-
         void init(const int num);
+        static Ind&& slice(int start = 0, int end = 0, int step = 1);
 };
 
 
@@ -122,6 +127,8 @@ class Matrix2
         Matrix2 operator-(const T m);
         T& operator()(const int i, const int j);
         T& operator()(const int i);
+        Matrix2 operator()(Ind& ind); // slice as in python
+        Matrix2 operator()(Ind&& ind); // slice as in python
 
         template<class C>
         friend Matrix2<C> operator*(const C n, const Matrix2<C>& m);
@@ -166,7 +173,7 @@ class Matrix2
  * input:
  * return:
  *  */
-Ind::Ind():ele_num(0), datax(NULL), datay(NULL)
+Ind::Ind():ele_num(0), datax(NULL), datay(NULL),slice_start(0), slice_end(0), slice_step(0)
 {
 }
 
@@ -177,9 +184,31 @@ Ind::Ind():ele_num(0), datax(NULL), datay(NULL)
  * input:
  * return:
  *  */
-Ind::Ind(const int num):ele_num(num), datax(new int[num]), datay(new int[num])
+Ind::Ind(const int num):ele_num(num), datax(new int[num]), datay(new int[num]), slice_start(0), slice_end(0), slice_step(0)
 {
 }
+
+
+
+/* function:
+ * instruction: copying construct
+ * input:
+ * return:
+ *  */
+Ind::Ind(Ind& ind)
+{
+    cout << "Ind: copying construct" << endl;
+
+    ele_num = ind.ele_num;
+    slice_start = ind.slice_start;
+    slice_end = ind.slice_end;
+    slice_step = ind.slice_step;
+
+    datax = ind.datax;
+    datay = ind.datay;
+    
+}
+
 
 
 /* function:
@@ -192,9 +221,17 @@ Ind::Ind(Ind&& ind)
     cout << "Ind: moving construct" << endl;
 
     ele_num = ind.ele_num;
+    slice_start = ind.slice_start;
+    slice_end = ind.slice_end;
+    slice_step = ind.slice_step;
+
     datax = ind.datax;
     datay = ind.datay;
     
+    ind.slice_start = 0;
+    ind.slice_end = 0;
+    ind.slice_step = 0;
+    ind.ele_num = 0;
     ind.datax = NULL;
     ind.datay = NULL;
 }
@@ -211,8 +248,16 @@ Ind& Ind::operator=(Ind&& ind)
     cout << "Ind: moving assignment" << endl;
 
     this->ele_num = ind.ele_num;
+    this->slice_start = ind.slice_start;
+    this->slice_end = ind.slice_end;
+    this->slice_step = ind.slice_step;
     this->datax = ind.datax;
     this->datay = ind.datay;
+
+    ind.slice_start = 0;
+    ind.slice_end = 0;
+    ind.slice_end = 0;
+    ind.ele_num = 0;
     ind.datax = NULL;
     ind.datay = NULL;
 
@@ -231,9 +276,52 @@ Ind::~Ind()
 {
     delete[] datax;
     delete[] datay;
+
+    slice_start = 0;
+    slice_end = 0;
+    slice_end = 0;
+    ele_num = 0;
     datax = NULL;
     datay = NULL;
 }
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+void Ind::print()
+{
+
+    if(ele_num != 0)
+        for(long i = 0; i < ele_num; i++)
+            cout << "(" << datax[i] << ", " << datay[i] << ")" << endl;
+
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+void Ind::free()
+{
+    delete[] datax;
+    delete[] datay;
+    slice_start = 0;
+    slice_end = 0;
+    slice_end = 0;
+    ele_num = 0;
+    datax = NULL;
+    datay = NULL;
+}
+
+
 
 
 /* function:
@@ -254,32 +342,19 @@ void Ind::init(const int num)
 
 
 /* function:
- * instruction: 
+ * instruction: get the slice index with one number, works like a[ar:] in numpy
  * input:
  * return:
  *  */
-void Ind::print()
+Ind&& Ind::slice(int start, int end, int step)
 {
+    Ind res;
 
-    for(long i = 0; i < ele_num; i++)
-    {
-        cout << "(" << datax[i] << ", " << datay[i] << ")" << endl;
-    }
-}
+    res.slice_start = start; 
+    res.slice_end = end;
+    res.slice_step = step;
 
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
-void Ind::free()
-{
-    delete[] datax;
-    delete[] datay;
-    datax = NULL;
-    datay = NULL;
+    return std::move(res);
 }
 
 
@@ -1236,23 +1311,6 @@ Matrix2<T> Matrix2<T>::operator-(const T m)
  * input:
  * return:
  *  */
-template<class C>
-Matrix2<C> operator-(const C n, const Matrix2<C>& m)
-{
-    Matrix2<C> res(m.N,m.D);
-    for(long i = 0; i < m.ele_num; i++)
-        res.data[i] = n - m.data[i];
-
-    return std::move(res);
-}
-
-
-
-/* function:
- * instruction: 
- * input:
- * return:
- *  */
 template<class T>
 T& Matrix2<T>::operator()(const int i, const int j)
 {
@@ -1278,6 +1336,90 @@ T& Matrix2<T>::operator()(const int i)
 
     return data[i];
 }
+
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator()(Ind& ind)
+{
+    Matrix2<T> res;
+
+    if(ind.ele_num != 0) // if indices are given separately
+    {
+        res.init(1, ind.ele_num);
+        for(long i = 0; i < ind.ele_num; i++)
+        {
+            if(ind.datax[i] > N || ind.datay[i] > D)
+            {
+                cout << __FILE__ << ": " << __LINE__ << ": value of index must be constrained within the shape of Matrix (N, D)" << endl;
+                exit(0);
+            }
+            res.data[i] = data[ind.datax[i]*D+ind.datay[i]];
+        }
+    }
+
+    return std::move(res);
+}
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class T>
+Matrix2<T> Matrix2<T>::operator()(Ind&& ind)
+{
+    Matrix2<T> res;
+    int st, ed;
+    int pos;
+    int n;
+
+    if(ind.slice_start < 0)
+        st = N + ind.slice_start;
+    if(ind.slice_end <= 0)
+        ed = N + ind.slice_start;
+    if(st < 0 || ed > N)
+    {
+        cout << __FILE__ << ": " << __LINE__ << ": slice indices out of range" << endl;
+        exit(0);
+    }
+
+    n = (ed - st) / ind.slice_step;
+    pos = st*D;
+    res.init(n,D);
+    for(int i = 0; i < n; i++)
+    {
+        memcpy((res.data+i*D), data+pos*D, sizeof(T)*D);
+        pos += ind.slice_step;
+    }
+
+    return std::move(res);
+}
+
+
+
+/* function:
+ * instruction: 
+ * input:
+ * return:
+ *  */
+template<class C>
+Matrix2<C> operator-(const C n, const Matrix2<C>& m)
+{
+    Matrix2<C> res(m.N,m.D);
+    for(long i = 0; i < m.ele_num; i++)
+        res.data[i] = n - m.data[i];
+
+    return std::move(res);
+}
+
 
 
 /* function:
