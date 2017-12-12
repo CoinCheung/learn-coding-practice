@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from past.builtins import xrange
 
+
 class TwoLayerNet(object):
   """
   A two-layer fully-connected neural network. The net has an input dimension of
@@ -40,6 +41,12 @@ class TwoLayerNet(object):
     self.params['b1'] = np.zeros(hidden_size).reshape(1,hidden_size)
     self.params['W2'] = std * np.random.randn(hidden_size, output_size)
     self.params['b2'] = np.zeros(output_size).reshape(1,output_size)
+
+    #  print(self.params['W1'])
+    #  print(self.params['b1'])
+    #  print(self.params['W2'])
+    #  print(self.params['b2'])
+
 
   def loss(self, X, y=None, reg=0.0):
     """
@@ -151,8 +158,8 @@ class TwoLayerNet(object):
 
     grads['W1'] = dW1.reshape(D,C)
     grads['b1'] = db1.reshape(1,C)
-    grads['W2'] = dW2.reshape(C,M)
-    grads['b2'] = db2.reshape(1,M)
+    grads['W2'] = dW2.reshape(C, M)
+    grads['b2'] = db2.reshape(1, M)
 
 
 
@@ -192,12 +199,24 @@ class TwoLayerNet(object):
     val_acc_history = []
 
     for it in xrange(num_iters):
+
+
       X_batch = None
       y_batch = None
 
       indices = np.random.choice(num_train, batch_size)
       X_batch = X[indices]
       y_batch = y[indices]
+
+      print('indices are:')
+      print(indices)
+      #  print("X_batch is: ")
+      #  print(X_batch)
+      #  print("X_batch is: ")
+      #  print(y_batch)
+
+      import pdb
+      pdb.set_trace()
       #########################################################################
       # TODO: Create a random minibatch of training data and labels, storing  #
       # them in X_batch and y_batch respectively.                             #

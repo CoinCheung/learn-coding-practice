@@ -64,17 +64,6 @@ typedef struct
 
 
 
-// get the minimal value of a matrix along a given dimension
-Matrix Matrix_min_axis(const Matrix, const int axis);
-
-// get the minimal value of all the elements of one matrix
-double Matrix_min_all(const Matrix); 
-
-// pick the rows of a Matrix and combine them to be a new one, return the new one
-Matrix Matrix_pick_rows(const Matrix, const Matrix);
-
-// pick one specific element in each given row and return a new vector 
-Matrix Matrix_pick_eles(const Matrix, const Matrix, const Matrix);
 
 //deep copy a Matrix
 Matrix Matrix_copy(const Matrix); 

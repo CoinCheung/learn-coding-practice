@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+#-*- encoding: utf-8 -*-
+
+rm -rf ./tblog
+python tensorboard.py
+tensorboard --logdir='./tblog'
+

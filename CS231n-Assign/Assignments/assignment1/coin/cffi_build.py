@@ -80,4 +80,4 @@ ffibuild.cdef(r'''
 ''')
 
 if __name__ == '__main__':
-    ffibuild.compile(verbose = True, debug = True)
+    ffibuild.compile(verbose = True, debug = False)

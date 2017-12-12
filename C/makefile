@@ -1,7 +1,7 @@
 .all:dd test
 
 dd:dd.o header.o
-	g++ dd.o header.o -o dd
+	g++ -std=c++11 dd.o header.o -o dd
 
 test: test.o header.o
 	gcc header.o test.o -lm -o test
@@ -10,7 +10,7 @@ test.o: test.c
 	gcc -c -g test.c  
 
 dd.o:dd.cpp
-	g++ -c -g dd.cpp -o dd.o
+	g++ -c -g -std=c++11 dd.cpp -o dd.o
 
 header.o: header.c
 	gcc -c -g header.c -o header.o

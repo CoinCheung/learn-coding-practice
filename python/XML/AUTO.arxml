@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR >
+      <SHORT-NAME>AUTOSAR_Platform</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE>
+          <SHORT-NAME>BaseTypes</SHORT-NAME>
+          <CATEGORY>STANDARD</CATEGORY>
+          <ELEMENTS> 
+            <SW-BASE-TYPE UUID="b9cf038d-d877-4113-b75c-d1eca901c8f8">
+              <SHORT-NAME>boolean</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>8</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>BOOLEAN</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="0a3d638e-a346-49de-9517-208889e6b590">
+              <SHORT-NAME>void</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>0</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>VOID</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>void</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="52a4e3df-2c8d-43ab-9f62-b2d4d8dda37e">
+              <SHORT-NAME>sint8</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>8</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>2C</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="91010dc4-ed48-4dcd-a8ff-c6787a0c5eeb">
+              <SHORT-NAME>sint16</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>16</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>2C</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="44940d64-09da-4488-8fa1-af6543cba82e">
+              <SHORT-NAME>sint32</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>32</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>2C</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="c635ce21-e27c-46f3-bf4b-47c9458d5430">
+              <SHORT-NAME>uint8</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>8</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>NONE</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="2480bcf3-97f0-422e-8afd-567a6fd99535">
+              <SHORT-NAME>uint16</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>16</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>NONE</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="a6a390c7-69be-432e-8768-3b4688ece603">
+              <SHORT-NAME>uint32</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>32</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>NONE</BASE-TYPE-ENCODING>
+              <NATIVE-DECLARATION>uint32</NATIVE-DECLARATION>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="6fef5cd5-97b6-429d-afce-4f07175b24fc">
+              <SHORT-NAME>float32</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>32</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>IEEE754</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+            <SW-BASE-TYPE UUID="8b56e894-59df-4804-aeb4-3968bac7c1c8">
+              <SHORT-NAME>float64</SHORT-NAME>
+              <CATEGORY>FIXED_LENGTH</CATEGORY>
+              <BASE-TYPE-SIZE>64</BASE-TYPE-SIZE>
+              <BASE-TYPE-ENCODING>IEEE754</BASE-TYPE-ENCODING>
+            </SW-BASE-TYPE>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <AR-PACKAGE>
+          <SHORT-NAME>DataConstrs</SHORT-NAME>
+          <CATEGORY>STANDARD</CATEGORY>
+          <ELEMENTS>
+            <DATA-CONSTR UUID="bd3de0cc-8d67-45f5-8a78-5a773951feae">
+              <SHORT-NAME>boolean</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">1</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="fbcc01e6-9bdf-46df-908d-322cb90af329">
+              <SHORT-NAME>sint8</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">-128</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">127</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="32c5c7bb-ae1a-4b4b-b2d2-0d2012e73956">
+              <SHORT-NAME>sint16</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">-32768</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">32767</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="933fb7ae-1f46-4a36-b98f-89d0649129d8">
+              <SHORT-NAME>sint32</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">-2147483648</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">2147483647</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="734e89a1-cecb-467a-b77f-389dba8b2106">
+              <SHORT-NAME>uint8</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">255</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="9b5df066-933a-4c8a-9276-038827229873">
+              <SHORT-NAME>uint16</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">65535</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+            <DATA-CONSTR UUID="79a78967-fbab-40a7-8960-7089bab5ac7f">
+              <SHORT-NAME>uint32</SHORT-NAME>
+              <DATA-CONSTR-RULES>
+                <DATA-CONSTR-RULE>
+                  <INTERNAL-CONSTRS>
+                    <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                    <UPPER-LIMIT INTERVAL-TYPE="CLOSED">4294967295</UPPER-LIMIT>
+                  </INTERNAL-CONSTRS>
+                </DATA-CONSTR-RULE>
+              </DATA-CONSTR-RULES>
+            </DATA-CONSTR>
+          </ELEMENTS>
+        </AR-PACKAGE>
+        <!-- <AR-PACKAGE UUID="65b40210-1361-4cad-83a2-920fa7a760ff">
+           -   <SHORT-NAME>ImplementationDataTypes</SHORT-NAME>
+           -   <CATEGORY>STANDARD</CATEGORY>
+           -   <ELEMENTS>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="5083e273-cf66-4ccc-8d0c-36dd4c7b3e29">
+           -       <SHORT-NAME>boolean</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/boolean</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/boolean</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="c8c16239-c030-4b23-96bd-9b8e65899eda">
+           -       <SHORT-NAME>sint8</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/sint8</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/sint8</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="6a5c47fd-8717-42bc-9527-5d30adaf89da">
+           -       <SHORT-NAME>sint16</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/sint16</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/sint16</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="0e4fee90-a7e6-4346-a8e2-d6d1edeb793b">
+           -       <SHORT-NAME>sint32</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/sint32</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/sint32</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="fda6c24d-2816-42a2-92bb-ff3dcfe852d3">
+           -       <SHORT-NAME>uint8</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/uint8</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/uint8</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="7f10911e-b538-4137-a2e8-8a2a2cf5ae12">
+           -       <SHORT-NAME>uint16</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/uint16</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/uint16</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="c5620c38-1d2e-4ec0-b4fd-8761ac1dff12">
+           -       <SHORT-NAME>uint32</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/uint32</BASE-TYPE-REF>
+           -             <DATA-CONSTR-REF DEST="DATA-CONSTR">/AUTOSAR_Platform/DataConstrs/uint32</DATA-CONSTR-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="0449ca11-6aa8-422a-ba7b-7cb140160dea">
+           -       <SHORT-NAME>float32</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/float32</BASE-TYPE-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -     <IMPLEMENTATION-DATA-TYPE UUID="c0e5e3b0-2aa5-4352-bb0a-4a8db884a90b">
+           -       <SHORT-NAME>float64</SHORT-NAME>
+           -       <CATEGORY>VALUE</CATEGORY>
+           -       <SW-DATA-DEF-PROPS>
+           -         <SW-DATA-DEF-PROPS-VARIANTS>
+           -           <SW-DATA-DEF-PROPS-CONDITIONAL>
+           -             <BASE-TYPE-REF DEST="SW-BASE-TYPE">/AUTOSAR_Platform/BaseTypes/float64</BASE-TYPE-REF>
+           -           </SW-DATA-DEF-PROPS-CONDITIONAL>
+           -         </SW-DATA-DEF-PROPS-VARIANTS>
+           -       </SW-DATA-DEF-PROPS>
+           -       <TYPE-EMITTER>BSW</TYPE-EMITTER>
+           -     </IMPLEMENTATION-DATA-TYPE>
+           -   </ELEMENTS>
+           - </AR-PACKAGE> -->
+      </AR-PACKAGES>
+</AUTOSAR>
