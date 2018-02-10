@@ -2,4 +2,10 @@
 /python/mxnet/try/params/
 /python/mxnet/trycnn_save_export/
 /python/mxnet/cifar10/
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/MNIST_data
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/*.meta
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/*.zip.1
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/*.index
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/*.npz
+/CS231n-Assign/Assignments/assignmnet3/cs231n/datasets/*.data-*-of*1
 
