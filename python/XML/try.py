@@ -15,6 +15,7 @@ root = xmlparse.getroot()
 
 node = root.getchildren()[0]
 print(node.tag)
+<<<<<<< HEAD
 
 aaa = {}
 aaa[1] = "fuck"
@@ -23,3 +24,5 @@ aaa[2] = "you"
 for k, v in aaa.items():
     print(k)
     print(v)
+=======
+>>>>>>> f0df970ee0681c0b2c0b5c70e8ee37f7d89ba029
