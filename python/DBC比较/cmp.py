@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# filename: cmp005.py
+# filename: cmp.py
 
 
 
@@ -13,7 +13,7 @@ import copy
 def readSignals(filename):
     # nested method that cut off certain prefix and postfix of a signal name
     def get_signal_shortname(sig):
-        # check post fix
+        # check postfix
         if len(sig) > 6 and (sig[-6:-1].upper() == 'H6HSC' or sig[-6:-1].upper() == 'H1HSC'):
             sig = sig[:-6]
         elif sig[-5:-1].upper() == '_HSC':
@@ -28,7 +28,7 @@ def readSignals(filename):
             sig = sig[:-3]
         elif sig[-2:].upper() == 'UB':
             sig = sig[:-2]
-        # check pre fix
+        # check prefix
         if sig[:3].upper() == 'UB_':
             sig = sig[3:]
         elif sig[:2].upper() == 'UB':
@@ -394,7 +394,7 @@ def merge(sigs1, sigs2, msg1, msg2, tuple_badefs, dbcnames, logname):
 
 
 
-
+# program entrance
 if __name__ == '__main__':
     dbc1 = 'AS26HYB.dbc'
     dbc2 = 'EP1_HYB.dbc'
@@ -418,4 +418,3 @@ if __name__ == '__main__':
     fhd.write(' ... done')
     fhd.close()
 
-    print(len(signals1))

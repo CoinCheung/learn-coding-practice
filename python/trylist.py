@@ -29,20 +29,21 @@
 #  print((x,y)) for (x,y) in di.items()
 #  print(type(di.items()))
 
-## ====================================
-di = [ {'name':'Coin', 'Age':23, 'Gender':'Male'},{'name':'Cheung', 'Age':25, 'Gender':'Male1'} ]
+# ====================================
+di = [{'name': 'Coin', 'Age': 23, 'Gender': 'Male'},
+      {'name': 'Cheung', 'Age': 25, 'Gender': 'Male1'}]
 
 
-ditp = [tuple(diel.items()) for diel in di ]
+ditp = [tuple(diel.items()) for diel in di]
 print(ditp)
 diset = set(ditp)
 print(diset)
-print('conver back',list(diset))
+print('conver back', list(diset))
 
 print()
 dic = (('name', 'Coin'), ('Age', 23), ('Gender', 'Male'))
 print('compare')
-print(dict(dic))
+ print(dict(dic))
 
 ditpback = [dict(dic) for dic in list(diset)]
 print(ditpback)
@@ -55,7 +56,7 @@ print(ditpback[0])
 
 print()
 print()
-di = {'name':'Coin', 'Age':23, 'Gender':'Male'}
+di = {'name': 'Coin', 'Age': 23, 'Gender': 'Male'}
 print(di.keys())
 
 

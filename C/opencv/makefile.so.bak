@@ -1,0 +1,45 @@
+CPP = g++
+MODIR = ./build/
+LIBODIR = ./build/libobjs
+LIBDIR = ./lib
+CFLAGs = -c -g $(shell pkg-config --cflags opencv)
+LFLAGs = $(shell pkg-config --libs opencv) -ltcmalloc -lConnectedMomain.o 
+_MOBJs = main.o 
+_LIBOBJs = ConnectedDomain.o
+
+
+MOBJs = $(patsubst %.o, $(MODIR)/%.o, $(_MOBJs))
+LIBOBJs = $(patsubst %.o, $(LIBODIR)/%.o, $(_LIBOBJs))
+LIBs = $(patsubst %.o, $(LIBDIR)/lib%.so, $(_LIBOBJs))
+# LFALGs += $(_LIBOBJs: %.o=-l%)
+
+
+
+all: $(LIBs) main
+	echo $(LIBs)
+
+main: $(MOBJs)
+	$(CPP) -o $@ $^ $(LFLAGs)
+
+# compile objects
+$(MODIR)/%.o: %.cpp
+	@mkdir -p $(MODIR)
+	$(CPP) -o $@ $< $(CFLAGs) 
+
+# compile libs
+$(LIBDIR)/lib%.so: $(LIBODIR)/%.o 
+	@mkdir -p $(LIBDIR)
+	$(CPP) $^ -shared $(LFLAGs) -o $@
+
+$(LIBODIR)/%.o: %.cpp
+	@mkdir -p $(LIBODIR)
+	$(CPP) -fPIC $(CFLAGs) $^ -o $@
+
+
+
+
+
+clean:
+	rm -rf ./build/ ./lib main
+
+

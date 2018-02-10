@@ -2,7 +2,7 @@ CppC = g++
 CFLAGs = -c -g
 # LFLAGs
 ODIR = ./build
-_OBJs = a.o b.o main.o
+_OBJs = main.o
 
 OBJs = $(patsubst %.o, $(ODIR)/%.o, $(_OBJs))
 

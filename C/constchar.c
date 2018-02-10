@@ -3,11 +3,16 @@
 #include<string.h>
 
 
-const int* fun()
+const int* fun1()
 {
     int *p = (int *)malloc(sizeof(int)*10);
 
     return p;
+}
+
+void fun2()
+{
+    
 }
 
 int main()
@@ -20,7 +25,7 @@ int main()
 
     a[0] = 1;
 
-    pp = fun();
+    pp = fun1();
     pp[0] = 1;
     fprintf(stdout, "pp[0] is: %s\n",pp[0]);
 
