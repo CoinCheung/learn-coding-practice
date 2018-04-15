@@ -125,8 +125,8 @@ cv::Mat ConnectedDomain(cv::Mat srcImage, bool draw)
     // for(long i{0}; i<len; i++)
     //     data[i] = labels[i] * interval;
 
-    swap(data_show, srcImage.data);
+    // swap(data_show, srcImage.data);
     // delete[] labels;
 
-    return srcImage;
+    return show;
 }

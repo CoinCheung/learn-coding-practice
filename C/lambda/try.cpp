@@ -3,9 +3,12 @@
 #include<memory>
 #include<vector>
 #include<map>
+#include<functional>
 
 using std::cout;
 using std::endl;
+
+void try_function(void);
 
 
 int main(void)
@@ -63,5 +66,25 @@ int main(void)
     std::for_each(std::begin(arr), std::end(arr), [&](int& n){n=i++;});
     for(auto num:arr)cout << num << endl;
 
+    ///////
+    //type
+    int j = 10;
+    auto val_ = [=]()mutable{j++;std::cout << j << std::endl;};
+
+    val_();
+    // j++;
+    val_();
+    cout << j << endl;
+
+    try_function();
+
     return 0;
+
+}
+
+
+
+void try_function(void)
+{
+    std::function<int(int)> ld = [](int val){return val+1;};
 }

@@ -1,7 +1,9 @@
 #include<sstream>
+#include<string>
 #include<stdio.h>
 #include<iostream>
 
+void try_string();
 
 void tryTrap()
 {
@@ -150,5 +152,31 @@ int main()
 
     tryTrap();
 
+
+    try_string();
+
     return 0;
+}
+
+void try_string()
+{
+    using namespace std;
+
+    string str("I am coin cheung, nice to meet you");
+    string token;
+    // string res;
+
+    token.assign("coin");
+    cout << (str.find(token, 6) == string::npos) << endl;
+
+    cout << str.rfind(token, 9) << endl;
+
+    // res.assign(str);
+    string res(str);
+    // res.replace(2,2, "was");
+    res.replace(res.begin()+2, res.end()-30, "was");
+    cout << str << endl;
+    cout << res << endl;
+
+    cout << str[0] << endl;
 }

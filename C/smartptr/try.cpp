@@ -1,5 +1,6 @@
 #include<memory>
 #include<iostream>
+#include<cassert>
 
 
 using std::shared_ptr;
@@ -20,6 +21,9 @@ shared_ptr<int> fun(shared_ptr<int> sp)
 
     return sp_local;
 }
+
+
+void try_sp();
 
 int main(void)
 {
@@ -88,6 +92,40 @@ int main(void)
     sp5 = fun(sp);
     cout << sp5.use_count() << endl;
 
+    try_sp();
+
     return 0;
+}
+
+
+void try_sp()
+{
+    using namespace std;
+
+    shared_ptr<int> sp(new int{3});
+
+    cout << "try_sp" << endl;
+    cout << *sp << endl;
+
+    shared_ptr<int> sp2 = make_shared<int>(10);
+    cout << sp2.get()[0] << endl;
+    
+    shared_ptr<int> sp3(new int[10]{1,1,1,1,1}, [](int *p){delete[] p;});
+    cout << sp3.get()[3] << endl;
+    cout << *(sp3.get()+3) << endl;
+
+
+    cout << "20180228" << endl;
+    weak_ptr<int> wp1{sp3};
+    weak_ptr<int> wp2 = sp3;
+    weak_ptr<int> wp3(sp3);
+
+    auto spp = wp1.lock();
+    assert(spp!=nullptr);
+    cout << *spp.get() << endl;
+
+    cout << "20180310" << endl;
+    shared_ptr<int[][4]> spi = make_shared<int[]4[]>(10);
+
 }
 

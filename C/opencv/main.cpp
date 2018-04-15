@@ -11,6 +11,8 @@ void ConnDomain();
 void GrayScale();
 void tryverbose();
 void EdgeDetect();
+void testPix();
+void addMask();
 
 
 int main(void)
@@ -19,7 +21,7 @@ int main(void)
     using namespace std;
 
 
-    // ConnDomain();
+    ConnDomain();
 
     // GrayScale();
 
@@ -40,10 +42,12 @@ int main(void)
     // cout << temp.depth() << endl;
 
 
-    EdgeDetect();
+    // EdgeDetect();
     // tryfilter();
     // SplitMerge();
     // tryverbose();
+    // testPix();
+    addMask();
 
 
     cout << "done" << endl;
@@ -59,18 +63,42 @@ void ConnDomain()
     using namespace std;
     using namespace cv;
 
-    Mat srcImage = imread("./img.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat srcImage = imread("./img_bak.jpg", CV_LOAD_IMAGE_GRAYSCALE);
     assert(!srcImage.empty());
     // imshow("original",srcImage);
     // waitKey(1);
 
     // compute the connected domain
     Mat temp;
-    resize(srcImage, temp, Size(0, 0), 0.4, 0.4, INTER_CUBIC);
+    // resize(srcImage, temp, Size(0, 0), 0.4, 0.4, INTER_CUBIC);
     // resize(srcImage, temp, Size(440, 300), 0, 0, INTER_CUBIC);
-    Mat Conn = ConnectedDomain(temp, false);
-    imshow("connected domains", Conn);
-    waitKey(0);
+    // Mat Conn = ConnectedDomain(temp, false);
+    Mat Conn = ConnectedDomain(srcImage, false);
+    cout << "Connected Domain channels: " << Conn.channels() << endl;
+
+    // generate a mask based on a connected domain
+    int rows{Conn.rows};
+    int col_num{Conn.cols};
+    int channels{Conn.channels()};
+    int cols{col_num * channels};
+    unsigned char *ps{nullptr};
+    unsigned char *pd{nullptr};
+    Mat mask(rows, col_num, CV_8UC1, Scalar(0));
+
+    for (int i{0}; i < rows; i++)
+    {
+        ps = Conn.ptr<unsigned char>(i);
+        pd = mask.ptr<unsigned char>(i);
+        for (int j{0}; j < cols; j++)
+            if (ps[j] == (unsigned char)120)
+                pd[j] = 255;
+    }
+
+    string name("mask.jpg");
+    imwrite(name, mask);
+    // cout << "channel is: " << Conn.channels() << endl;
+    // imshow("connected domains", Conn);
+    // waitKey(0);
 }
 
 
@@ -278,7 +306,85 @@ void EdgeDetect()
     // Canny(src, out, t1, t1*ratio, 3); // 3这个参数表示计算sobel梯度时，使用的窗的大小，3表示3x3的窗口
     // imshow("Canny opencv interface", out);
     // waitKey(0);
+}
 
 
 
+void testPix()
+{
+    using namespace std;
+    using namespace cv;
+
+    Mat src = imread("./img.jpg");
+    assert(!src.empty());
+
+    int rows{src.rows};
+    int col_num{src.cols};
+    int channels{src.channels()};
+    int cols{col_num * channels};
+    unsigned char *p{nullptr};
+
+    for (int i{0}; i < rows; i++)
+    {
+        p = src.ptr<unsigned char>(i);
+        for (int j{0}; j < cols; j++)
+            p[j] = 255 - p[j];
+    }
+
+    imshow("converted", src);
+    waitKey(0);
+}
+
+
+
+void addMask()
+{
+/*     Things should keep in mind using this function:
+ *         1. an image and a mask image should be given
+ *         2. original image and mask image should have exact size
+ *         3. mask image should be a single-channel image
+ *         4. pixels of mask should be 255 on the mask image
+ *  */
+    using namespace std;
+    using namespace cv;
+
+    Mat src(imread("./img_bak.jpg").clone());
+    Mat mask(imread("./mask.jpg", -1));
+    assert(!src.empty());
+    assert(!mask.empty());
+
+    int rows{mask.rows};
+    int cols{mask.cols};
+    int channels{src.channels()};
+    auto type{src.type()};
+    unsigned char *sp{nullptr};
+    unsigned char *dp{nullptr};
+    Rect rect;
+    Mat grid;
+    Scalar color;
+
+    int msize{15};
+    int cstep{channels * msize};
+
+
+    for (int i{0}; i < rows - msize; i += msize)
+    {
+        sp = src.ptr<unsigned char>(i);
+        dp = mask.ptr<unsigned char>(i);
+
+        for (int js{0}, jd{0}; jd < cols - msize; js+=cstep, jd+=msize)
+        {
+            if (dp[jd] == 255)
+            {
+                color = Scalar(sp[js], sp[js+1], sp[js+2]);
+                rect = Rect(jd, i, msize, msize);
+
+                grid = src(rect);
+                Mat(rect.size(), type, color).copyTo(grid);
+            }
+        }
+    }
+
+    string name("masked_image.jpg");
+    imwrite(name, src);
 }
