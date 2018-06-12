@@ -1,4 +1,5 @@
 *.[oa]
+*.pyc
 /python/mxnet/try/params/
 /python/mxnet/trycnn_save_export/
 /python/mxnet/cifar10/

@@ -1,0 +1,283 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<iterator>
+#include<stdio.h>  // for EOF
+
+// TODO: refine the format
+
+bool compare_pair(std::pair<int, int> a, std::pair<int, int> b) {
+    return a.second < b.second;
+}
+
+class Solution {
+    public:
+        int type_num;  // num of stamp types
+        int res_num;  // num of stamps
+        int sum;
+        int largest;
+        std::vector<std::pair<int, int> > values;
+
+        Solution();
+        void init();
+        void compute_sum(int pos);
+        bool is_in_range(int require);
+        void compute_all();
+        Solution& operator=(const Solution&);
+        bool is_equal(Solution&);
+};
+
+Solution::Solution() {
+    values.reserve(4);
+}
+
+void Solution::init() {
+    type_num = 0;
+    res_num = 0;
+    sum = 0;
+    largest = -1;
+}
+
+void Solution::compute_sum(int pos) {
+    sum = 0;
+    for (int i{0}; i <= pos; i++) {
+        if (values[i].second != -1) sum += values[i].second;
+    }
+}
+
+inline bool Solution::is_in_range(int req) {
+    return sum <= req;
+}
+
+void Solution::compute_all() {
+    int val, ind;
+    bool repeat;
+
+    init();
+    for (int i{0}; i < 4; i++) {
+        ind = values[i].first;
+        val = values[i].second;
+        if (val != -1) {
+            sum += val;
+            res_num ++;
+
+            repeat = false;
+            for (int j{0}; j < i; j++) {
+                if (values[j].first == ind) {
+                    repeat = true;
+                    break;
+                }
+            }
+            if (!repeat) type_num ++;
+        }
+        if(val > largest) largest = val;
+    }
+}
+
+Solution& Solution::operator=(const Solution& sol) {
+    type_num = sol.type_num;
+    res_num = sol.res_num;
+    sum = sol.sum;
+    largest = sol.largest;
+    for (int i{0}; i < 4; i++) values[i] = sol.values[i];
+    return *this;
+}
+
+bool Solution::is_equal(Solution& sol) {
+    using namespace std;
+    int ind1[4];
+    int ind2[4];
+    for (int i{0}; i < 4; i ++) {
+        ind1[i] = sol.values[i].first;
+        ind2[i] = values[i].first;
+    }
+    // std::sort(std::begin(ind1), std::end(ind1));
+    // std::sort(std::begin(ind2), std::end(ind2));
+    std::sort(ind1, ind1 + 4);
+    std::sort(ind2, ind2 + 4);
+    for (int i{0}; i < 4; i ++) {
+        if (ind1[i] != 0 && ind2[i] != 0) {
+            if (ind1[i] != ind2[i]) return false;
+        }
+    }
+    return true;
+}
+
+class Stamp {
+    public:
+        bool tie;
+        bool none;
+        std::vector<std::pair<int, int> > stamps;
+        std::vector<int> customers;
+        Solution curr;
+        Solution best;
+
+        void init();
+        void solve();
+        void one_custom(int);
+        void get_best(int require);
+        void print(int require);
+        void compute_curr();
+};
+
+void Stamp::init() {
+    stamps.clear();
+    stamps.push_back(std::make_pair(0, -1));
+    customers.clear();
+}
+
+void Stamp::solve() {
+    using namespace std;
+
+    sort(stamps.begin(), stamps.end(), compare_pair); // sort from small to large
+
+    int customer_num{static_cast<int>(customers.size())};
+    for (int i{0}; i < customer_num; i ++) {
+        one_custom(customers[i]);
+        print(customers[i]);
+    }
+}
+
+void Stamp::one_custom(int require) {
+    int stamp_size;
+    best.init();
+    stamp_size = static_cast<int>(stamps.size());
+    tie = false;
+
+    for (int i0{0}; i0 < stamp_size; i0 ++) {
+        curr.values[0] =  stamps[i0];
+        curr.compute_sum(0);
+        if (!curr.is_in_range(require)) break;
+
+        for (int i1{0}; i1 < stamp_size; i1 ++) {
+            curr.values[1] =  stamps[i1];
+            curr.compute_sum(1);
+            if (!curr.is_in_range(require)) break;
+
+            for (int i2{0}; i2 < stamp_size; i2 ++) {
+                curr.values[2] =  stamps[i2];
+                curr.compute_sum(2);
+                if (!curr.is_in_range(require)) break;
+
+                for (int i3{0}; i3 < stamp_size; i3 ++) {
+                    curr.values[3] =  stamps[i3];
+
+                    curr.compute_all();
+                    if (!curr.is_in_range(require)) break;
+                    // for (int i{0}; i < 4; i++)
+                    //     std::cout << curr.values[i] << ", ";
+                    // std::cout << std::endl;
+                    get_best(require);  // see if res[] is the best, and store the best to array best[]. If there is tie, set flag tie=true
+                }
+            }
+        }
+    }
+    // see style here
+    if (best.type_num == 0) none = true;
+    else none = false;
+}
+
+void Stamp::get_best(int require) {
+    // return directly if current solution does not meet require
+    if (curr.sum != require) return;
+    // if no previous best solutions computed
+    if (best.type_num == 0) {
+        tie = false;
+        best = curr;
+        return;
+    }
+    // see if there is a tie 
+    if (best.type_num < curr.type_num) {
+        tie = false;
+        best = curr;
+        return;
+    } else if (best.type_num == curr.type_num) {
+        if (best.res_num > curr.res_num) {
+            tie = false;
+            best = curr;
+            return;
+        } else if (best.res_num == curr.res_num) {
+            if (curr.largest > best.largest) {
+                tie = false;
+                best = curr;
+                return;
+            } else if (curr.largest == best.largest) {
+                // std::cout << "herere" << std::endl;;
+                // std::cout << best.is_equal(curr) << std::endl;
+                // for (int i{0}; i < 4; i++)
+                //     std::cout << curr.values[i].first << " ,";
+                // std::cout << std::endl;
+                // for (int i{0}; i < 4; i++)
+                //     std::cout << best.values[i].first << " ,";
+                // std::cout << std::endl;
+
+                if (best.is_equal(curr)) return;
+                tie = true;
+            }
+        }
+    }
+}
+
+
+void Stamp::print(int require) {
+    using namespace std;
+    std::ios_base::sync_with_stdio(false);
+
+    if (none) {
+        cout << require << " ---- none\n";
+    } else if (tie) {
+        cout << require << " (" << best.type_num << "): tie\n";
+    } else {
+        /////////////////
+        // cout << best.values[0] << endl;
+        // cout << best.values[1] << endl;
+        // cout << best.values[2] << endl;
+        // cout << best.values[3] << endl;
+        // for (auto& el:best.values)
+        //     cout << el << ", ";
+        // cout << endl;
+        /////////////////
+        sort(best.values.begin(), best.values.end());
+        cout << require << " (" << best.type_num << "): ";
+        for (int i{0}; i < 3; i ++) {
+            if (best.values[i].second != -1) {
+                cout << best.values[i].second << " ";
+            }
+        }
+        cout << best.values[3].second << '\n';
+    }
+}
+
+
+
+int main() {
+    using namespace std;
+    std::ios_base::sync_with_stdio(false);
+
+    Stamp stmp;
+    int n;
+    int types[512]{0};
+
+    while (true) {
+        stmp.init();
+
+        cin >> n;
+        if (n == EOF) exit(0);
+
+        int i{1};
+        while (n != 0) {
+            if (types[n] > 4) continue;
+            stmp.stamps.push_back(make_pair(i++, n));
+            cin >> n;
+        }
+
+        cin >> n;
+        while (n != 0) {
+            stmp.customers.push_back(n);
+            cin >> n;
+        }
+        stmp.solve();
+    }
+    return 0;
+}
+

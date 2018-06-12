@@ -179,4 +179,22 @@ void try_string()
     cout << res << endl;
 
     cout << str[0] << endl;
+
+    cout << "here we are" << endl;
+    stringstream ss;
+    ss << "123,456,789";
+    ss.clear();
+    int num;
+    ss >> num;
+    cout << num << endl;
+    ss.seekg(1, ios::cur);
+    ss.clear();
+    ss >> num;
+    cout << num << endl;
+    ss.seekg(1, ios::cur);
+    // ss.clear();
+    ss >> num;
+    cout << num << endl;
+
+
 }

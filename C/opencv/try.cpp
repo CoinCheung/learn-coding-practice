@@ -3,6 +3,7 @@
 #include<array>
 #include<vector>
 #include<algorithm>
+#include<opencv2/opencv.hpp>
 
 
 int main(void)
@@ -17,7 +18,6 @@ int main(void)
         if(val>max)
             max=val;
     cout << max << endl;
-
 
     // array<int, 7> mm{0};
     // for(auto& val:mm)
@@ -42,6 +42,22 @@ int main(void)
     end(mm);
     begin(mm);
 
+    using namespace cv;
+    Mat img =  imread("./img.jpg", -1);
+    Mat img_out;
+    imshow("org", img);
+    waitKey(0);
+
+    vector<Mat> channels;
+    vector<Mat> chnls(3);
+    split(img, channels);
+    cout << "channels: " << channels.size() << endl;
+    chnls[0] = channels[0];
+    chnls[1] = channels[2];
+    chnls[2] = channels[1];
+    merge(chnls, img_out);
+    imshow("changed", img);
+    waitKey(0);
 
 
 

@@ -8,6 +8,11 @@ _OBJs = main.o ConnectedDomain.o grayscale.o
 OBJs = $(patsubst %.o, $(ODIR)/%.o, $(_OBJs))
 
 
+try: $(ODIR)/try.o
+	$(CPP) -o $@ $^ $(LFLAGs)
+$(ODIR)/try.o: try.cpp
+	$(CPP) -o $@ $< $(CFLAGs) 
+
 
 main: $(OBJs)
 	$(CPP) -o $@ $^ $(LFLAGs)
