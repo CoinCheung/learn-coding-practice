@@ -196,5 +196,44 @@ void try_string()
     ss >> num;
     cout << num << endl;
 
+    string s1("fuck you all\n");
+    string s2;
+    cout << "before: \n";
+    cout << s1.size() << endl;
+    cout << s2.size() << endl;
+    string(s1).swap(s2);
+    cout << "after: \n";
+    cout << s1.size() << endl;
+    cout << s2.size() << endl;
+    s1 = s2;
+    cout << s1 << endl;
+    cout << s2 << endl;
+    s1[2] = 'd';
+    cout << s1 << endl;
+    cout << s2 << endl;
+
+    cout << "start\n";
+    cout << s2;
+    string s3(std::move(s2));
+    s2[2] = 'd';
+    cout << "s2" << s2;
+    cout << "s3" << s3;
+    cout << "done\n";
+
+    string& sref = s3;
+    s3[2] = 'i';
+    cout << s3;
+    cout << sref;
+    sref = s1;
+    cout << sref;
+    cout << s3;
+
+    int a = 10;
+    int& b = a;
+    int c = 20;
+    cout << a << endl;
+    cout << b << endl;
+    b = c;
+    cout << b << endl;
 
 }

@@ -1,107 +1,143 @@
-#include<stdio.h>
-#include<iostream>
-#include<iomanip>
-#include<vector>
-#include<array>
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+#include <cstdlib>
+using namespace std;
+ 
+int stamps[300];//保存所有邮票值
+int now[5];//当前组合
+int ans[5];//最终结果组合
+int n,m,total,ansnum;//总邮票数目，顾客需求以及组合邮票的数目
+bool tie,none;//是否是平局还是没有这种组合
+bool vis[300];//为了计算多少种邮票的标志数组
+ 
+void print();//输出格式
 
-class CLS {
-    public:
-        int a;
-        CLS(int val): a(val){}
-};
-
-int main()
+int cal(int tmp[], int num)//计算有多少种类邮票
 {
-    using namespace std;
-
-    double pi = 10.0/20;
-
-    printf("%07.2f\n", 3.4);
-
-    cout.precision(4);
-    cout << 3.1415926 << "\n";
-
-    cout << fixed << setprecision(4) << pi << "\n";
-
-    array<int, 10> arr;
-    arr[9] = 9;
-
-    int a[10];
-
-    vector<int> vi(5);
-    vector<int> v2(5);
-    int i{0};
-    for (auto& el: vi)
-        el = i++;
-    v2.assign(vi.begin(), vi.end());
-    for (auto& el:v2)
-        cout << el << ", ";
-    cout << endl;
-
-    vi[100] = 8;
-    cout << vi[100] << endl;
-    vi.resize(1000);
-
-    pair<int, int> p1{1,2}, p2{3,4};
-    p2 = p1;
-    cout << p1.first << ", " << p1.second << endl;
-    cout << p2.first << ", " << p2.second << endl;
-    p1.first = 888;
-    cout << p1.first << ", " << p1.second << endl;
-    cout << p2.first << ", " << p2.second << endl;
-
-    vector<CLS> v11(5, CLS(3));
-    vector<CLS> v22(10, CLS(4));
-
-    cout << "before" << endl;
-    cout << &v11 << endl;
-    cout << &v22 << endl;
-    cout << &v11[0] << endl;
-    cout << &v22[0] << endl;
-    vi = vector<int>(std::move(v2));
-    cout << "after" << endl;
-    cout << &v11 << endl;
-    cout << &v22 << endl;
-    cout << &v11[0] << endl;
-    cout << &v22[0] << endl;
-
-    cout << v11[0].a << endl;
-    cout << v22[0].a << endl;
-
-    return 0;
+	int res = 0;
+	memset(vis, 0, sizeof(vis));
+	for (int i = 0; i < num; i ++)
+	{
+		if (!vis[tmp[i]])
+		{
+			vis[tmp[i]] = true;
+			res ++;
+		}
+	}
+	return res;
 }
-
-
-
-
-#include<iostream>
-#include<vector>
-#include<map>
-#include<algorithm>
-#include<iterator>
-#include<stdio.h>  // for EOF
-int main() {
-    using namespace std;
-    std::ios_base::sync_with_stdio(false);
-
-    int n;
-
-    while (cin >> n) {
-
-        // ;
-        // if (n == EOF) exit(0);
-        cout << n;
-
-        while (n != 0) {
-            cin >> n;
-            cout << n;
-        }
-
-        while (cin >> n) {
-            if (n == 0) break;
-            cout << n;
-        }
-    }
-    return 0;
+ 
+int getMax(int tmp[], int num)//计算邮票中的最大值
+{
+	int res = 0;
+	for (int i = 0; i < num; i ++)
+	{
+		if (res < stamps[tmp[i]])
+		{
+			res = stamps[tmp[i]];
+		}
+	}
+	return res;
 }
-
+ 
+void comp()//更新邮票组合
+{
+	int know = cal(now, total);
+	int kans = cal(ans, ansnum);
+	int maxans = getMax(ans, ansnum);
+	int maxnow = getMax(now, total);
+ 
+	if (ansnum == -1 || know > kans || (know == kans && ansnum > total) || (kans == know && ansnum == total && maxnow > maxans))
+	{
+		tie = false;
+		ansnum = total;
+		for (int i = 0; i < total; i ++)
+		{
+			ans[i] = now[i];
+		}
+		return;
+	}
+	if (kans == know && ansnum == total && maxnow == maxans)
+	{
+		tie = true;
+	}
+ 
+}
+ 
+void dfs(int nn, int ssum)//深搜，遍历每一种情况
+{
+	if (ssum > m)
+	{
+		return;
+	}
+	if (ssum == m)
+	{
+		none = false;
+		comp();
+	}
+	if (total == 4)
+	{
+		return;
+	}
+	for (int i = nn; i < n; i ++)
+	{
+		now[total] = i;
+		total ++;
+		dfs(i, ssum + stamps[i]);
+		total --;
+	}
+}
+ 
+int main()//主函数
+{
+	int i,j;
+	while (scanf("%d", &j) != EOF)
+	{
+		i = 0;
+		stamps[i] = j;
+		while (stamps[i])
+		{
+			i ++;
+			scanf("%d", &stamps[i]);
+		}
+		n = i ;
+		sort(stamps, stamps + n);
+		while (scanf("%d" ,&m),m)
+		{
+			total = 0;
+			ansnum = -1;
+			tie = false;
+			none = true;
+			dfs(0, 0);
+			if (!none)
+			{
+				sort(ans, ans + ansnum);
+			}
+			print();
+		}
+	}
+	return 0;
+}
+ 
+ 
+void print()//输出格式
+{
+	if (none)
+	{
+		printf("%d ---- none\n", m);
+		return;
+	}
+	printf("%d (%d):", m, cal(ans, ansnum));
+	if (tie)
+	{
+		printf(" tie\n");
+		return;
+	}
+	for (int i = 0; i < ansnum; i ++)
+	{
+		printf(" %d", stamps[ans[i]]);
+	}
+	printf("\n");
+}

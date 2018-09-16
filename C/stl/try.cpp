@@ -88,6 +88,12 @@ void copy_or_not() {
     cout << mp.count(4) << endl;
     cout << mp2.count(4) << endl;
 
+    cout << "here\n";
+    cout << mp2[6] << endl;
+    cout << mp2.count(6) << endl;
+    mp2.insert(make_pair<int, int>(666, 7));
+    cout << mp2[666] << endl;
+
 
 }
 
