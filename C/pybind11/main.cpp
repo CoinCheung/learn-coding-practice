@@ -73,8 +73,8 @@ py::dict get_dict() {
     li.append(3);
     res["name"] = "fuck";
     res["age"] = 23;
-    // res[py::int(1)] = li;
-    res["1"] = li;
+    res[py::int_(1)] = li;
+    // res["1"] = li;
 
     return res;
 }
