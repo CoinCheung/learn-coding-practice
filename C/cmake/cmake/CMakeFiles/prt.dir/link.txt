@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,libprt.so -o libprt.so CMakeFiles/prt.dir/main.cpp.o CMakeFiles/prt.dir/fun.cpp.o  -L/home/coin/learn-coding-practice/C/cmake/. -Wl,-rpath,/home/coin/learn-coding-practice/C/cmake/.:/home/coin/learn-coding-practice/C/cmake/cmake libplay.so 

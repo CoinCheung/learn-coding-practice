@@ -2,7 +2,8 @@
 #include<iostream>
 #include<string>
 #include<vector>
-// #include"fun.h"
+#include"fun.h"
+#include"play.h"
 
 namespace py = pybind11;
 
@@ -86,5 +87,7 @@ PYBIND11_MODULE(main, m) {
     m.def("print_list", &print_list, "print some numbers");
     m.def("add", &add, "print some numbers");
     m.def("getDict", &get_dict, "print some numbers");
+    m.def("print", &print, "print some numbers");
+    m.def("print_fuck", &print_fuck, "print some numbers");
 }
 
