@@ -7,4 +7,4 @@ link_directories(./)
 
 add_subdirectory(pybind11)
 pybind11_add_module(main SHARED main.cpp fun.cpp)
-target_link_libraries(main libplay)
+target_link_libraries(main PRIVATE play)
