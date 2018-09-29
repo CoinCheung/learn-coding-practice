@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/fun.cpp.o  -o ../bin/main  -L/home/coin/learn-coding-practice/C/cmake/. -Wl,-rpath,/home/coin/learn-coding-practice/C/cmake/.:/home/coin/learn-coding-practice/C/cmake/lib: ../lib/libplay.so 

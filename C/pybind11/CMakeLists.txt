@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(example)
 
+set(install_dir ..)
+
 add_library(play SHARED play.cpp)
 include_directories(./)
 link_directories(./)

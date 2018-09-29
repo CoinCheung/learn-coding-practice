@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/coin/learn-coding-practice/C/cmake/fun.cpp" "/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/prt.dir/fun.cpp.o"
-  "/home/coin/learn-coding-practice/C/cmake/main.cpp" "/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/prt.dir/main.cpp.o"
+  "/home/coin/learn-coding-practice/C/cmake/fun.cpp" "/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/main.dir/fun.cpp.o"
+  "/home/coin/learn-coding-practice/C/cmake/main.cpp" "/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/main.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

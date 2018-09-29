@@ -200,9 +200,6 @@ example_BINARY_DIR:STATIC=/home/coin/learn-coding-practice/C/cmake/cmake
 //Value Computed by CMake
 example_SOURCE_DIR:STATIC=/home/coin/learn-coding-practice/C/cmake
 
-//Dependencies for the target
-prt_LIB_DEPENDS:STATIC=general;play;
-
 
 ########################
 # INTERNAL cache entries

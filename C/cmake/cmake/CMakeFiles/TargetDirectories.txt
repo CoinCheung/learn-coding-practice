@@ -1,4 +1,8 @@
-/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/rebuild_cache.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/install/strip.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/install/local.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/main.dir
 /home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/edit_cache.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/rebuild_cache.dir
 /home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/play.dir
-/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/prt.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/list_install_components.dir
+/home/coin/learn-coding-practice/C/cmake/cmake/CMakeFiles/install.dir

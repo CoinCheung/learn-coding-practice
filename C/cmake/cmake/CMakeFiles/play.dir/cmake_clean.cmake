@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/play.dir/play.cpp.o"
-  "libplay.pdb"
-  "libplay.so"
+  "../lib/libplay.pdb"
+  "../lib/libplay.so"
 )
 
 # Per-language clean rules from dependency scanning.

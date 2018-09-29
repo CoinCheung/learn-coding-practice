@@ -6,8 +6,8 @@
  * 截断的方法是，每次只计算value < half的情况，如果组合起来的value大于half了，后
  * 面的都不用计算了
  *  */
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 
 
 using std::cout;
@@ -29,7 +29,7 @@ int main() {
 
     std::ios_base::sync_with_stdio(false);
 
-    while(cin >> nums[1] >> nums[2] >>
+    while (cin >> nums[1] >> nums[2] >>
             nums[3] >> nums[4] >> nums[5] >> nums[6]) {
         sum = 0;
         for (int i{1}; i < 7; ++i) sum += i * nums[i];

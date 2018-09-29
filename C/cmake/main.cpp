@@ -6,7 +6,7 @@
 int main() {
     print_fun();
     print_play();
-    print();
+    // print();
     return 0;
 }
 
