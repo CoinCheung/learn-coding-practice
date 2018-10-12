@@ -1,0 +1,3 @@
+/home/coin/learn-coding-practice/C/function/CMakeFiles/rebuild_cache.dir
+/home/coin/learn-coding-practice/C/function/CMakeFiles/main.dir
+/home/coin/learn-coding-practice/C/function/CMakeFiles/edit_cache.dir

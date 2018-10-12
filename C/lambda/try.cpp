@@ -9,6 +9,7 @@ using std::cout;
 using std::endl;
 
 void try_function(void);
+void try_vec();
 
 
 int main(void)
@@ -77,11 +78,44 @@ int main(void)
     cout << j << endl;
 
     try_function();
+    try_vec();
 
     return 0;
 
 }
 
+
+void try_vec() {
+    using namespace std;
+    auto f0 = [] {cout << "first" << endl;};
+    // decltype(f0) f1;
+    // decltype(f0) f1 = [] {cout << "second" << endl;};
+    // decltype(f0) f2 = [] {cout << "third" << endl;};
+
+
+    f0();
+    string str("fuck you asshole");
+    auto t2= str.end();
+    for (auto t1{str.begin()}; t1 != t2; ++t1) cout << *t1;
+    cout << endl << *(t2 - 5) << endl;
+    auto t1{str.begin()};
+    cout << endl << *(t2 - 5) << endl;
+    cout << t1[2] << endl;
+    int a[10];
+    auto ta = std::begin(a);
+    ta[2] = 4;
+    cout << ta[2] << endl;
+    // f1();
+    // f2();
+
+
+    // vector<decltype(f0)> fv{f0, f1};
+    // fv.push_back(f0);
+    // fv.push_back(f1);
+    // fv.push_back(f2);
+
+    // for (auto &f : fv) f();
+}
 
 
 void try_function(void)
