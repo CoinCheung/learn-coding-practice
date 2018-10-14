@@ -10,3 +10,11 @@ link_directories(./)
 add_subdirectory(pybind11)
 pybind11_add_module(main SHARED main.cpp fun.cpp)
 target_link_libraries(main PRIVATE play)
+
+
+set_target_properties( main play
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}"
+)

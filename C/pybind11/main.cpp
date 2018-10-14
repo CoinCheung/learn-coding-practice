@@ -1,4 +1,5 @@
-#include<pybind11/pybind11.h>
+#include"pybind11/pybind11.h"
+#include"pybind11/numpy.h"
 #include<iostream>
 #include<string>
 #include<vector>
@@ -77,6 +78,25 @@ py::dict get_dict() {
     res[py::int_(1)] = li;
     // res["1"] = li;
 
+    return res;
+}
+
+
+py::array_t<double> max(py::array_t<double, py::array::c_style> arr) {
+    using namespace std;
+    auto r = arr.unchecked<2>();
+    size_t h = r.shape(0);
+    size_t w = r.shape(1);
+
+    auto res = py::array_t<double>({h, 1});
+    double max;
+    for (size_t i{0}; i < h; ++i) {
+        max = r(h, 0);
+        for (size_t j{0}; j < w; ++j) {
+            if (max < r(i, j)) max = r(i, j);
+        }
+        res(i, 0) = max;  // problem seems to be here
+    }
     return res;
 }
 
