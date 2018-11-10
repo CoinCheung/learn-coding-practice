@@ -125,7 +125,11 @@ void try_sp()
     cout << *spp.get() << endl;
 
     cout << "20180310" << endl;
-    shared_ptr<int[][4]> spi = make_shared<int[]4[]>(10);
+    shared_ptr<int[4][4]> sp(new int[4][4]);
+    auto sp_ptr = sp.get();
+    // for(auto i{0}; i<4; i++)
+    //     for(auto j{0}; j<4; j++)
+    //         sp_ptr[i][j] = i*j;
 
 }
 
