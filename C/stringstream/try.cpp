@@ -235,5 +235,10 @@ void try_string()
     cout << b << endl;
     b = c;
     cout << b << endl;
+    
+    ss.str();
+    ss.clear();
+    ss << "hello     world";
+    while(ss >> res) cout << res;
 
 }

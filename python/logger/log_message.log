@@ -1,0 +1,16 @@
+INFO main.py:12: fuck you from main before handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:15: fuck you from main after handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:12: fuck you from main before handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:15: fuck you from main after handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:18: fuck you from new logger
+INFO main.py:12: fuck you from main before handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:12: fuck you from main before handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:15: fuck you from main after handler
+INFO mod.py:7: fuck you from mod
+INFO main.py:18: fuck you from new logger

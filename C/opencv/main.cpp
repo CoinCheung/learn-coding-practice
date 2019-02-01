@@ -1,4 +1,5 @@
 #include<opencv2/opencv.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
 #include<iostream>
 #include<cassert>
 #include"grayscale.h"
@@ -13,6 +14,7 @@ void tryverbose();
 void EdgeDetect();
 void testPix();
 void addMask();
+void try_show();
 
 
 int main(void)
@@ -47,7 +49,8 @@ int main(void)
     // SplitMerge();
     // tryverbose();
     // testPix();
-    addMask();
+    // addMask();
+    try_show();
 
 
     cout << "done" << endl;
@@ -63,7 +66,8 @@ void ConnDomain()
     using namespace std;
     using namespace cv;
 
-    Mat srcImage = imread("./img_bak.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat srcImage = imread("../img_bak.jpg");
+    cvtColor(srcImage, srcImage, COLOR_BGR2GRAY);
     assert(!srcImage.empty());
     // imshow("original",srcImage);
     // waitKey(1);
@@ -108,7 +112,9 @@ void GrayScale()
     using namespace std;
     using namespace cv;
 
-    Mat srcImage = imread("./img.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat srcImage = imread("./img.jpg");
+    cvtColor(srcImage, srcImage, COLOR_BGR2GRAY);
+
     assert(!srcImage.empty());
     Mat temp;
 
@@ -126,7 +132,8 @@ void tryfilter()
     using namespace std;
     using namespace cv;
 
-    Mat srcImage = imread("./img.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat srcImage = imread("./img.jpg");
+    cvtColor(srcImage, srcImage, COLOR_BGR2GRAY);  // opencv4 usage
     // Mat srcImage = imread("./img.jpg");
     assert(!srcImage.empty());
     imshow("before filter",srcImage);
@@ -387,4 +394,15 @@ void addMask()
 
     string name("masked_image.jpg");
     imwrite(name, src);
+}
+
+void try_show() {
+    using namespace std;
+    using namespace cv;
+
+    string impth("/home/coin/pic.jpg");
+    Mat im = imread(impth);
+    imshow("img", im);
+    waitKey(0);
+
 }
