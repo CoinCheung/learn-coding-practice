@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++11   -rdynamic CMakeFiles/main.dir/main.cpp.o  -o main  -L/home/coin/learn-coding-practice/C/random/. 
