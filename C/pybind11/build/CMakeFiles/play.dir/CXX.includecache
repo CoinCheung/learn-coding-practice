@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/coin/learn-coding-practice/C/pybind11/play.cpp
+play.h
+/home/coin/learn-coding-practice/C/pybind11/play.h
+iostream
+-
+
+/home/coin/learn-coding-practice/C/pybind11/play.h
+

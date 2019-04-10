@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,main.cpython-37m-x86_64-linux-gnu.so -o ../main.cpython-37m-x86_64-linux-gnu.so CMakeFiles/main.dir/main.cpp.o CMakeFiles/main.dir/fun.cpp.o  -L/home/coin/learn-coding-practice/C/pybind11/. -Wl,-rpath,/home/coin/learn-coding-practice/C/pybind11/.:/home/coin/learn-coding-practice/C/pybind11 -flto ../libplay.so 
