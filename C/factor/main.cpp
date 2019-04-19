@@ -1,12 +1,11 @@
 #include<iostream>
 #include<vector>
-#include<cstdint>
 
 using namespace std;
 
 class QF {
  private:
-    int32_t n;
+    int n;
 
  public:
     vector<int64_t> QFContract(int64_t a);
@@ -15,7 +14,6 @@ class QF {
 vector<int64_t> QF::QFContract(int64_t a) {
     vector<int64_t> factors;
     factors.reserve(50);
-    int32_t e = 0;
 
     n = 0;
     while (a > 1) {
@@ -30,18 +28,22 @@ vector<int64_t> QF::QFContract(int64_t a) {
     return factors;
 }
 
-int32_t main() {
+int main() {
     QF qf;
     int64_t number_base = 6541367001;
     // int64_t number = 3;
     for (int i{0}; i < 1000; i+=2) {
         int64_t number = number_base + i;
+        // cout << "\nprocessing: " << number << endl;
         auto res = qf.QFContract(number);
         if (res.size() == 2) {
+            cout << number << ": ";
             for (auto &el : res) cout << el << ", ";
+            cout << endl;
         }
     }
 
     return 0;
 }
+
 
