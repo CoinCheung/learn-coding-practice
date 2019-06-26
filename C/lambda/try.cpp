@@ -7,9 +7,11 @@
 
 using std::cout;
 using std::endl;
+using std::vector;
 
 void try_function(void);
 void try_vec();
+void try_idx_sort();
 
 
 int main(void)
@@ -79,6 +81,7 @@ int main(void)
 
     try_function();
     try_vec();
+    try_idx_sort();
 
     return 0;
 
@@ -121,4 +124,27 @@ void try_vec() {
 void try_function(void)
 {
     std::function<int(int)> ld = [](int val){return val+1;};
+}
+
+
+void try_idx_sort() {
+    vector<int> v{4, 5, 2, 7, 1, 9, 8};
+    vector<int> indices(v.size());
+    for (int i{0}; i < v.size(); ++i) {
+        indices[i] = i;
+    }
+    std::sort(
+        indices.begin(),
+        indices.end(),
+        [&v](int id1, int id2) {return v[id1] > v[id2];}
+    );
+
+    for(int i{0}; i < v.size(); ++i) {
+        cout << v[i] << ", ";
+    }
+    cout << endl;
+    for(int i{0}; i < v.size(); ++i) {
+        cout << indices[i] << ", ";
+    }
+    cout << endl;
 }

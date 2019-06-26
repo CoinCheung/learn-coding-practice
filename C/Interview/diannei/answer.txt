@@ -1,0 +1,49 @@
+a) k-means的前提是假设数据在当前特征空间内的分布是连通的，不存在属于同一个类的样本分成多个簇。
+大概过程是:
+1. 首先随机取k个样本作为初始的各个类的中心。
+2. 将其他样本按与各个类的中心的距离，取最近的类中心作为这个样本的类别。
+3. 重新计算各个类别的中心点。
+4. 重复2,3这两步一直到中心点收敛，或者达到最大迭代次数。
+
+
+b) GMM是计算每一个样本在k个高斯分布中的概率，然后由这个概率计算出k个高斯分布的均值和方差，并用这个均值和方差更新这k个高斯分布，一直重复直到收敛。
+Kmeans得到的是每个类的中心点，并且根据这个中心点得到每个样本属于的类别。GMM得到的是每个类的高斯分布，由每个样本在各个分布中的概率得到样本所属的类别。
+kmeans的优点的计算快，容易实现。缺点是不是对所有情况都有效。GMM优点是可以得到不同类的分布，可以用来估计样本密度。
+
+c)
+初始化: 首先每台机器随机取k个样本作为中心，或者像kmeans++那样取相互距离最远的k个样本，然后的reduce的时候将这些样本归并到一起，并且再根据相互距离得到k个中心点，作为初始中心点。
+
+算法流程:
+1. 初始化得到k个中心点
+2. 将k个中心点分发到各机器上，并且计算每台机器上各个样本属于哪个类，像本地kmeans一样.
+3. 计算每台机器上属于各个类的样本的个数，以及属于同一个类的样本的和。并且将这个样本之和以及各个类的个数reduce到同一台机器上。
+4. 在reduce的机器上，根据各个类的和还有样本个数，得到所有样本的中属于不同的类的个数以及样本之和，根据这个取平均得到新的中心点。
+5. 重复3,4一直到满足停止条件。
+
+void map(vector<sample> centers) {
+    int n_samples_this_machine = get_n_samples();
+    sample samples = get_samples();
+    int n_clusters = centers.size();
+
+    while (true) {
+        if (terminate conditions) break;
+        vector<sample> sums(n_clusters);
+        vector<int> n_samples_per_cluster(n_clusters, 0);
+        for (int i{0}; i < n_samples_this_machine; ++i) {
+            int cat = assign_cluster(samples[i], centers);
+            sums[cat] += samples[i];
+            n_samples_per_cluster[i] += 1;
+        }
+        centers = reduce(sums, n_samples_per_cluster);
+    }
+
+}
+
+vector<sample> reduce(vector<sample> sums, vector<int> n_samples_per_cluster) {
+    int n_clusters = sums.size();
+    vector<sample> centers(n_clusters, 0);
+    for (int i{0}; i < n_clusters; ++i) {
+        centers[i] = sums[i] / n_samples_per_cluster[i];
+    }
+    return centers;
+}
