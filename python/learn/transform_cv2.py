@@ -172,11 +172,13 @@ class ToTensor(object):
     def __call__(self, im_lb):
         im, lb = im_lb['im'], im_lb['lb']
         assert im.shape[:2] == lb.shape[:2]
-        im = im.transpose(2, 0, 1).astype(np.float32)
+        im = im[:, :, ::-1].transpose(2, 0, 1).astype(np.float32)
         im = torch.from_numpy(im).div_(255)
-        norm = lambda t, m, s: t.sub_(m).div_(s)
-        list(map(norm, im, self.mean, self.std))
-        lb=torch.from_numpy(lb.astype(np.int64))
+        dtype, device = im.dtype, im.device
+        mean = torch.as_tensor(self.mean, dtype=dtype, device=device)[:, None, None]
+        std = torch.as_tensor(self.std, dtype=dtype, device=device)[:, None, None]
+        im = im.sub_(mean).div_(std)
+        lb = torch.from_numpy(lb.astype(np.int64))
         return dict(im=im, lb=lb)
 
 
@@ -193,8 +195,45 @@ class Compose(object):
 
 
 if __name__ == '__main__':
-    flip = HorizontalFlip(p = 1)
-    crop = RandomCrop((321, 321))
-    rscales = RandomScale((0.75, 1.0, 1.5, 1.75, 2.0))
-    img = Image.open('data/img.jpg')
-    lb = Image.open('data/label.png')
+    imgpth = '/home/coin/Documents/Work/MZ/projects-bak/GEDeeplab-rollback/data/leftImg8bit/train/aachen/aachen_000086_000019_leftImg8bit.png'
+    lbpth = '/home/coin/Documents/Work/MZ/projects-bak/GEDeeplab-rollback/data/gtFine/train/aachen/aachen_000086_000019_gtFine_labelIds.png'
+    #  from PIL import Image
+    #  im = Image.open(imgpth)
+    #  lb = Image.open(lbpth)
+    #  print(lb.size)
+    #  im.show()
+    #  lb.show()
+    import cv2
+    im = cv2.imread(imgpth)
+    lb = cv2.imread(lbpth, 0)
+    lb = lb * 10
+
+    trans = Compose([
+        RandomScale([0.5, 0.7]),
+        RandomCrop((512, 512)),
+        ColorJitter(
+            brightness=0.5,
+            contrast=0.5,
+            saturation=0.5
+        ),
+        RandomHorizontalFlip(),
+    ])
+    out = trans(dict(im=im, lb=lb))
+    im = out['im']
+    lb = out['lb']
+    cv2.imshow('lb', lb)
+    cv2.imshow('org', im)
+    #  cv2.waitKey(0)
+
+    totensor = ToTensor(
+        mean=(0.406, 0.456, 0.485),
+        std=(0.225, 0.224, 0.229)
+    )
+    #  print(im[0, :2, :2])
+    print(lb[:2, :2])
+    out = totensor(out)
+    im = out['im']
+    lb = out['lb']
+    print(im.size())
+    #  print(im[0, :2, :2])
+    print(lb[:2, :2])

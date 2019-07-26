@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 
-
-import logging
 import torch
 
 
@@ -16,7 +14,7 @@ class WarmupPolyLrScheduler(torch.optim.lr_scheduler._LRScheduler):
             warmup_ratio=0.1,
             warmup='exp',
             last_epoch=-1,
-     ):
+    ):
         self.power = power
         self.max_iter = max_iter
         self.warmup_iter = warmup_iter
@@ -36,10 +34,34 @@ class WarmupPolyLrScheduler(torch.optim.lr_scheduler._LRScheduler):
         return lrs
 
     def get_warmup_ratio(self):
-        assert warmup in ('linear', 'exp')
+        assert self.warmup in ('linear', 'exp')
         alpha = self.last_epoch / self.warmup_iter
-        if warmup == 'linear':
+        if self.warmup == 'linear':
             ratio = self.warmup_ratio + (1 - self.warmup_ratio) * alpha
-        elif warmup == 'exp':
+        elif self.warmup == 'exp':
             ratio = self.warmup_ratio ** (1. - alpha)
         return ratio
+
+
+if __name__ == "__main__":
+    model = torch.nn.Conv2d(3, 16, 3, 1, 1)
+    optim = torch.optim.SGD(model.parameters(), lr=1e-3)
+
+    max_iter = 20000
+    lr_scheduler = WarmupPolyLrScheduler(optim, 0.9, max_iter, 200, 0.1, 'linear', -1)
+    lrs = []
+    for _ in range(max_iter):
+        lr = lr_scheduler.get_lr()[0]
+        print(lr)
+        lrs.append(lr)
+        lr_scheduler.step()
+    import matplotlib
+    import matplotlib.pyplot as plt
+    import numpy as np
+    lrs = np.array(lrs)
+    n_lrs = len(lrs)
+    plt.plot(np.arange(n_lrs), lrs)
+    plt.grid()
+    plt.show()
+
+
