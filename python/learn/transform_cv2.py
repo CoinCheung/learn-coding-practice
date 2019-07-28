@@ -32,8 +32,8 @@ class RandomCrop(object):
             w, h = int(scale * w + 1), int(scale * h + 1)
             im = cv2.resize(im, (w, h))
             lb = cv2.resize(lb, (w, h), interpolation=cv2.INTER_NEAREST)
-        sw, sh = int(random.random()*(w-W)), int(random.random()*(h-H))
-        crop = int(sw), int(sh), int(sw) + W, int(sh) + H
+        sw, sh = np.random.random(2)
+        sw, sh = int(sw*(w-W)), int(sh*(h-H))
         return dict(
             im=im[sh:sh+H, sw:sw+W, :],
             lb=lb[sh:sh+H, sw:sw+W]
@@ -45,7 +45,7 @@ class RandomHorizontalFlip(object):
         self.p = p
 
     def __call__(self, im_lb):
-        if random.random() > self.p:
+        if np.random.random() < self.p:
             return im_lb
         im, lb = im_lb['im'], im_lb['lb']
         assert im.shape[:2] == lb.shape[:2]
@@ -71,19 +71,6 @@ class RandomScale(object):
         )
 
 
-class RandomEqualization(object):
-    def __init__(self, p=0.5):
-        self.p = p
-
-    def __call__(self, im_lb):
-        im, lb = im_lb['im'], im_lb['lb']
-        assert im.shape[:2] == lb.shape[:2]
-        yuv = cv2.cvtColor(im, cv2.COLOR_BGR2YUV)
-        yuv[:, :, 0] = cv2.equalizeHist(yuv[:, :, 0])
-        im = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR)
-        return dict(im=im, lb=lb,)
-
-
 class ColorJitter(object):
     def __init__(self, brightness=None, contrast=None, saturation=None):
         if not brightness is None and brightness >= 0:
@@ -97,13 +84,13 @@ class ColorJitter(object):
         im, lb = im_lb['im'], im_lb['lb']
         assert im.shape[:2] == lb.shape[:2]
         if not self.brightness is None:
-            rate = random.uniform(*self.brightness)
+            rate = np.random.uniform(*self.brightness)
             im = self.adj_brightness(im, rate)
         if not self.contrast is None:
-            rate = random.uniform(*self.contrast)
+            rate = np.random.uniform(*self.contrast)
             im = self.adj_contrast(im, rate)
         if not self.saturation is None:
-            rate = random.uniform(*self.saturation)
+            rate = np.random.uniform(*self.saturation)
             im = self.adj_saturation(im, rate)
         return dict(im=im, lb=lb,)
 
@@ -141,7 +128,7 @@ class RandomChannelDrop(object):
         assert im.shape[:2] == lb.shape[:2]
 
         n_drops = random.randint(0, 2)
-        H, W, _ = im.shape
+        #  H, W, _ = im.shape
         if n_drops == 1:
             channels = random.sample([0, 1, 2], 1)
             im[:, :, channels[0]] = self.fill_value
@@ -159,6 +146,63 @@ class RandomChannelDrop(object):
             #      0, 256, (H, W), dtype=np.uint8
             #  )
         return dict(im=im, lb=lb)
+
+
+class RandomEqualize(object):
+    def __init__(self, p=0.2):
+        self.p = p
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        if np.random.random() < self.p:
+            yuv = cv2.cvtColor(im, cv2.COLOR_BGR2YCrCb)
+            yuv[:, :, 0] = cv2.equalizeHist(yuv[:, :, 0])
+            im = cv2.cvtColor(yuv, cv2.COLOR_YCrCb2BGR)
+        return dict(im=im, lb=lb)
+
+
+class RandomShear(object):
+    def __init__(self, p=0.5, rate=0.3):
+        self.p = p
+        self.rate = rate * np.pi / 180.
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        p, direction = np.random.random(2)
+        if p < self.p:
+            m = np.random.uniform(-self.rate, self.rate)
+            H, W, _ = im.shape
+            if direction < 0.5:
+                M = np.float32([[1, m, 0], [0, 1, 0]])
+            else:
+                M = np.float32([[1, 0, 0], [m, 1, 0]])
+            im = cv2.warpAffine(im, M, (W, H))
+            lb = cv2.warpAffine(
+                lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
+            )
+        return dict(im=im, lb=lb)
+
+
+class RandomRotate(object):
+    def __init__(self, p=0.5, rate=0.3):
+        self.p = p
+        self.rate = rate
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        if np.random.random() < self.p:
+            H, W, _ = im.shape
+            m = np.random.uniform(-self.rate, self.rate)
+            M = cv2.getRotationMatrix2D((W/2, H/2), m, 1.)
+            im = cv2.warpAffine(im, M, (W, H))
+            lb = cv2.warpAffine(
+                lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
+            )
+        return dict(im=im, lb=lb)
+
 
 
 class ToTensor(object):
@@ -209,21 +253,25 @@ if __name__ == '__main__':
     lb = lb * 10
 
     trans = Compose([
+        RandomHorizontalFlip(),
+        RandomShear(p=0.5, rate=3),
+        RandomRotate(p=0.5, rate=5),
         RandomScale([0.5, 0.7]),
-        RandomCrop((512, 512)),
+        RandomCrop((768, 768)),
         ColorJitter(
-            brightness=0.5,
-            contrast=0.5,
+            brightness=0.3,
+            contrast=0.3,
             saturation=0.5
         ),
-        RandomHorizontalFlip(),
+        RandomEqualize(p=0.1),
     ])
-    out = trans(dict(im=im, lb=lb))
+    inten = dict(im=im, lb=lb)
+    out = trans(inten)
     im = out['im']
     lb = out['lb']
     cv2.imshow('lb', lb)
     cv2.imshow('org', im)
-    #  cv2.waitKey(0)
+    cv2.waitKey(0)
 
     totensor = ToTensor(
         mean=(0.406, 0.456, 0.485),
@@ -236,4 +284,10 @@ if __name__ == '__main__':
     lb = out['lb']
     print(im.size())
     #  print(im[0, :2, :2])
-    print(lb[:2, :2])
+    #  print(lb[:2, :2])
+
+    out = totensor(inten)
+    im = out['im']
+    print(im.size())
+    print(im[0, 502:504, 766:768])
+

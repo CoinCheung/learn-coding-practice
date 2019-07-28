@@ -136,8 +136,35 @@ class Compose(object):
 
 
 if __name__ == '__main__':
-    flip = HorizontalFlip(p = 1)
-    crop = RandomCrop((321, 321))
-    rscales = RandomScale((0.75, 1.0, 1.5, 1.75, 2.0))
-    img = Image.open('data/img.jpg')
-    lb = Image.open('data/label.png')
+    imgpth = '/home/coin/Documents/Work/MZ/projects-bak/GEDeeplab-rollback/data/leftImg8bit/train/aachen/aachen_000086_000019_leftImg8bit.png'
+    lbpth = '/home/coin/Documents/Work/MZ/projects-bak/GEDeeplab-rollback/data/gtFine/train/aachen/aachen_000086_000019_gtFine_labelIds.png'
+
+    im = Image.open(imgpth)
+    lb = Image.open(lbpth)
+
+    trans = Compose([
+        RandomScale([0.5, 0.7]),
+        RandomCrop((512, 512)),
+        ColorJitter(
+            brightness=0.5,
+            contrast=0.5,
+            saturation=0.5
+        ),
+        HorizontalFlip(),
+    ])
+
+    inten = dict(im=im, lb=lb)
+    #  out = trans(inten)
+    #  im, lb = out['im'], out['lb']
+
+    import torchvision.transforms as T
+    totensor = T.Compose([
+        T.ToTensor(),
+        T.Normalize(
+            (0.406, 0.456, 0.485),
+            (0.225, 0.224, 0.229)
+        )
+    ])
+    im = totensor(im)
+    print(im.size())
+    print(im[0, 502:504, 766:768])
