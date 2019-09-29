@@ -35,12 +35,13 @@ class RandomCrop(object):
         sw, sh = np.random.random(2)
         sw, sh = int(sw*(w-W)), int(sh*(h-H))
         return dict(
-            im=im[sh:sh+H, sw:sw+W, :],
-            lb=lb[sh:sh+H, sw:sw+W]
+            im=im[sh:sh+H, sw:sw+W, :].copy(),
+            lb=lb[sh:sh+H, sw:sw+W].copy()
         )
 
 
 class RandomHorizontalFlip(object):
+
     def __init__(self, p=0.5):
         self.p = p
 
@@ -56,6 +57,7 @@ class RandomHorizontalFlip(object):
 
 
 class RandomScale(object):
+
     def __init__(self, scales=(1, )):
         self.scales = scales
 
@@ -66,12 +68,13 @@ class RandomScale(object):
         scale = random.choice(self.scales)
         w, h = int(W * scale), int(H * scale)
         return dict(
-            im=cv2.resize(im, (w, h)),
-            lb=cv2.resize(lb, (w, h), cv2.INTER_NEAREST),
+            im=cv2.resize(im, (w, h)).copy(),
+            lb=cv2.resize(lb, (w, h), cv2.INTER_NEAREST).copy(),
         )
 
 
 class ColorJitter(object):
+
     def __init__(self, brightness=None, contrast=None, saturation=None):
         if not brightness is None and brightness >= 0:
             self.brightness = [max(1-brightness, 0), 1+brightness]
@@ -120,6 +123,7 @@ class ColorJitter(object):
 
 
 class RandomChannelDrop(object):
+
     def __init__(self, fill_value=0):
         self.fill_value = fill_value
 
@@ -149,6 +153,7 @@ class RandomChannelDrop(object):
 
 
 class RandomEqualize(object):
+
     def __init__(self, p=0.2):
         self.p = p
 
@@ -163,9 +168,10 @@ class RandomEqualize(object):
 
 
 class RandomShear(object):
+
     def __init__(self, p=0.5, rate=0.3):
         self.p = p
-        self.rate = rate * np.pi / 180.
+        self.rate = rate
 
     def __call__(self, im_lb):
         im, lb = im_lb['im'], im_lb['lb']
@@ -173,22 +179,24 @@ class RandomShear(object):
         p, direction = np.random.random(2)
         if p < self.p:
             m = np.random.uniform(-self.rate, self.rate)
+            print(m)
             H, W, _ = im.shape
             if direction < 0.5:
-                M = np.float32([[1, m, 0], [0, 1, 0]])
+                M = np.float32([[1, m, -int(m*H)//2], [0, 1, 0]])
             else:
-                M = np.float32([[1, 0, 0], [m, 1, 0]])
-            im = cv2.warpAffine(im, M, (W, H))
+                M = np.float32([[1, 0, 0], [m, 1, -int(m*W)//2]])
+            im = cv2.warpAffine(im, M, (W, H)).astype(np.uint8)
             lb = cv2.warpAffine(
                 lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
-            )
+            ).astype(np.uint8)
         return dict(im=im, lb=lb)
 
 
 class RandomRotate(object):
-    def __init__(self, p=0.5, rate=0.3):
+
+    def __init__(self, p=0.5, degree=0.3):
         self.p = p
-        self.rate = rate
+        self.rate = degree
 
     def __call__(self, im_lb):
         im, lb = im_lb['im'], im_lb['lb']
@@ -197,12 +205,128 @@ class RandomRotate(object):
             H, W, _ = im.shape
             m = np.random.uniform(-self.rate, self.rate)
             M = cv2.getRotationMatrix2D((W/2, H/2), m, 1.)
-            im = cv2.warpAffine(im, M, (W, H))
+            im = cv2.warpAffine(im, M, (W, H)).astype(np.uint8)
             lb = cv2.warpAffine(
                 lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
-            )
+            ).astype(np.uint8)
         return dict(im=im, lb=lb)
 
+
+class ChannelShuffle(object):
+
+    def __init__(self, p=0):
+        self.p = p
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        if np.random.random() < self.p:
+            idx = np.array([0, 1, 2], dtype=np.int64)
+            np.random.shuffle(idx)
+            im = im[:, :, idx].astype(np.uint8)
+        return dict(im=im, lb=lb)
+
+
+class RandomErasing(object):
+
+    def __init__(self, p=0, size=(16, 16)):
+        self.p = p
+        self.size = size
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        H, W, _ = im.shape
+        h, w = self.size
+        if h > H or w > W: return im_lb
+
+        if np.random.random() < self.p:
+            sw, sh = np.random.random(2)
+            sw, sh = int(sw*(W-w)), int(sh*(H-h))
+            im[sh:sh+h, sw:sw+w, :] = (
+                np.random.random(3*w*h)*255).reshape(h, w, 3).astype(np.uint8)
+        return dict(im=im, lb=lb)
+
+
+class RandomShearRotate(object):
+
+    def __init__(self, p_shear=0, p_rot=0, rate_shear=0.3, rot_degree=0.3):
+        self.p_shear = p_shear
+        self.p_rot = p_rot
+        self.rate_shear = rate_shear
+        self.rate_rot = rot_degree
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        H, W, _ = im.shape
+        M = np.eye(3, dtype=np.float32)
+        if np.random.random() < self.p_rot:
+            m = np.random.uniform(-self.rate_rot, self.rate_rot)
+            M1 = np.eye(3, dtype=np.float32)
+            M1[:2] = cv2.getRotationMatrix2D((W/2, H/2), m, 1.)
+            M = np.matmul(M1, M)
+
+        p_shear, direction = np.random.random(2)
+        if p_shear < self.p_shear:
+            m = np.random.uniform(-self.rate_shear, self.rate_shear)
+            M2 = np.eye(3, dtype=np.float32)
+            if direction < 0.5:
+                M2[0] = np.array([1, m, -int(m*H)//2])
+            else:
+                M2[1] = np.array([m, 1, -int(m*W)//2])
+            M = np.matmul(M2, M)
+        M = M[:2]
+        im = cv2.warpAffine(im, M, (W, H)).astype(np.uint8)
+        lb = cv2.warpAffine(
+            lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
+        ).astype(np.uint8)
+
+        return dict(im=im, lb=lb)
+
+
+class RandomHFlipShearRotate(object):
+
+    def __init__(self, p_flip=0.5, p_shear=0, p_rot=0, rate_shear=0.3, rot_degree=0.3):
+        self.p_flip = p_flip
+        self.p_shear = p_shear
+        self.p_rot = p_rot
+        self.rate_shear = rate_shear
+        self.rate_rot = rot_degree
+
+    def __call__(self, im_lb):
+        im, lb = im_lb['im'], im_lb['lb']
+        assert im.shape[:2] == lb.shape[:2]
+        H, W, _ = im.shape
+        M = np.eye(3, dtype=np.float32)
+        if np.random.random() < self.p_flip:
+            M1 = np.eye(3, dtype=np.float32)
+            M1[0] = np.float32([-1, 0, W-1])
+            M = np.matmul(M1, M)
+
+        if np.random.random() < self.p_rot:
+            M2 = np.eye(3, dtype=np.float32)
+            m = np.random.uniform(-self.rate_rot, self.rate_rot)
+            M2[:2] = cv2.getRotationMatrix2D((W/2, H/2), m, 1.)
+            M = np.matmul(M2, M)
+
+        p_shear, direction = np.random.random(2)
+        if p_shear < self.p_shear:
+            M3 = np.eye(3, dtype=np.float32)
+            m = np.random.uniform(-self.rate_shear, self.rate_shear)
+            if direction < 0.5:
+                M3[0] = np.array([1, m, -int(m*H)//2])
+            else:
+                M3[1] = np.array([m, 1, -int(m*W)//2])
+            M = np.matmul(M3, M)
+
+        M = M[:2]
+        im = cv2.warpAffine(im, M, (W, H)).astype(np.uint8).copy()
+        lb = cv2.warpAffine(
+            lb, M, (W, H), borderValue=255, flags=cv2.INTER_NEAREST
+        ).astype(np.uint8).copy()
+
+        return dict(im=im, lb=lb)
 
 
 class ToTensor(object):
@@ -216,13 +340,13 @@ class ToTensor(object):
     def __call__(self, im_lb):
         im, lb = im_lb['im'], im_lb['lb']
         assert im.shape[:2] == lb.shape[:2]
-        im = im[:, :, ::-1].transpose(2, 0, 1).astype(np.float32)
+        im = im[:, :, ::-1].transpose(2, 0, 1).astype(np.float32) # to rgb order
         im = torch.from_numpy(im).div_(255)
         dtype, device = im.dtype, im.device
         mean = torch.as_tensor(self.mean, dtype=dtype, device=device)[:, None, None]
         std = torch.as_tensor(self.std, dtype=dtype, device=device)[:, None, None]
-        im = im.sub_(mean).div_(std)
-        lb = torch.from_numpy(lb.astype(np.int64))
+        im = im.sub_(mean).div_(std).clone()
+        lb = torch.from_numpy(lb.astype(np.int64)).clone()
         return dict(im=im, lb=lb)
 
 
@@ -255,23 +379,57 @@ if __name__ == '__main__':
     trans = Compose([
         RandomHorizontalFlip(),
         RandomShear(p=0.5, rate=3),
-        RandomRotate(p=0.5, rate=5),
+        RandomRotate(p=0.5, degree=5),
         RandomScale([0.5, 0.7]),
         RandomCrop((768, 768)),
+        RandomErasing(p=1, size=(36, 36)),
+        ChannelShuffle(p=1),
         ColorJitter(
             brightness=0.3,
             contrast=0.3,
             saturation=0.5
         ),
-        RandomEqualize(p=0.1),
+        #  RandomEqualize(p=0.1),
     ])
+    #  inten = dict(im=im, lb=lb)
+    #  out = trans(inten)
+    #  im = out['im']
+    #  lb = out['lb']
+    #  cv2.imshow('lb', lb)
+    #  cv2.imshow('org', im)
+    #  cv2.waitKey(0)
+
+
+    ### try merge rotate and shear here
+    im = cv2.imread(imgpth)
+    lb = cv2.imread(lbpth, 0)
+    im = cv2.resize(im, (1024, 512))
+    lb = cv2.resize(lb, (1024, 512), interpolation=cv2.INTER_NEAREST)
+    lb = lb * 10
     inten = dict(im=im, lb=lb)
-    out = trans(inten)
-    im = out['im']
-    lb = out['lb']
-    cv2.imshow('lb', lb)
-    cv2.imshow('org', im)
+    trans1 = Compose([
+        RandomShear(p=1, rate=0.15),
+        #  RandomRotate(p=1, degree=10),
+    ])
+    trans2 = Compose([
+        #  RandomShearRotate(p_shear=1, p_rot=0, rate_shear=0.1, rot_degree=9),
+        RandomHFlipShearRotate(p_flip=0.5, p_shear=1, p_rot=0, rate_shear=0.1, rot_degree=9),
+    ])
+    out1 = trans1(inten)
+    im1 = out1['im']
+    lb1 = out1['lb']
+    #  cv2.imshow('lb', lb1)
+    cv2.imshow('org1', im1)
+    out2 = trans2(inten)
+    im2 = out2['im']
+    lb2 = out2['lb']
+    #  cv2.imshow('lb', lb1)
+    #  cv2.imshow('org2', im2)
     cv2.waitKey(0)
+    print(np.sum(im1-im2))
+    print('====')
+    ####
+
 
     totensor = ToTensor(
         mean=(0.406, 0.456, 0.485),

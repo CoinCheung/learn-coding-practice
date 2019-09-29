@@ -6,6 +6,10 @@
 #include"ConnectedDomain.h"
 
 
+using std::cout;
+using std::endl;
+
+
 void tryfilter();
 void SplitMerge();
 void ConnDomain();
@@ -404,5 +408,6 @@ void try_show() {
     Mat im = imread(impth);
     imshow("img", im);
     waitKey(0);
+    cout << im.refcount << endl;
 
 }

@@ -29,13 +29,13 @@ class D: public A, public C {
 
 class left: public A {
     public:
-        // void print() {cout << "left function\n";}
+        void print() {cout << "left function\n";}
 };
 
 
 class right: public A {
     public:
-        // void print() {cout << "right function\n";}
+        void print() {cout << "right function\n";}
 };
 
 
@@ -59,7 +59,7 @@ int main() {
     s.right::print();
     // s.A::print();
     // s.print();
-    // s.left::A::print();
+    s.left::A::print();
 
     s.left::print();
 
