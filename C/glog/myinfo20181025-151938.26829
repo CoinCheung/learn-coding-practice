@@ -1,0 +1,7 @@
+Log file created at: 2018/10/25 15:19:38
+Running on machine: CoinArch
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1025 15:19:38.766796 26829 glog.cpp:14] INFO
+W1025 15:19:38.767063 26829 glog.cpp:15] WARNING
+E1025 15:19:38.767154 26829 glog.cpp:16] ERROR
+F1025 15:19:38.767246 26829 glog.cpp:23] Check failed: 1 <= 0 (1 vs. 0) triger equal

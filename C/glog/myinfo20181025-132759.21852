@@ -1,0 +1,6 @@
+Log file created at: 2018/10/25 13:27:59
+Running on machine: CoinArch
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1025 13:27:59.497465 21852 glog.cpp:11] INFO
+W1025 13:27:59.497726 21852 glog.cpp:12] WARNING
+E1025 13:27:59.497817 21852 glog.cpp:13] ERROR

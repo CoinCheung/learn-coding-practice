@@ -1,0 +1,8 @@
+
+/*
+var NewVar="a global variable";
+
+alert(NewVar);
+alert(new Date().toLocaleDateString());
+
+*/

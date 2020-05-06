@@ -1,0 +1,25 @@
+<html>
+<title>My First Page</title>
+<head>
+	
+	<script type="text/javascript" src="jsdefination.js">	</script>
+	
+	<form id="myform" action="#" onsubmit="checkForm();">
+		<p>UserName: <input id="nametext" name="username" type="text" /> </p>
+		<p><input type="submit" /></p>
+	</form>
+	
+	<p>jdfkjafdifjsakl</p>
+	
+</head>
+
+<body>
+	<script type="text/javascript" src="calling.js"> </script>
+	
+	<script type="text/javascript" src="function"> </script>
+
+	
+
+</body>
+
+</html>

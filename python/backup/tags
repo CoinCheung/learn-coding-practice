@@ -1,0 +1,35 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BuildTargets	FuncData.py	/^def BuildTargets(comments):$/;"	f
+EnterComments	FuncData.py	/^def EnterComments(): $/;"	f
+FuncData	back_tar.py	/^import FuncData$/;"	i
+FuncData	back_zip.py	/^import FuncData$/;"	i
+FuncData	pure_v4_argv.py	/^	import FuncData$/;"	i
+back_tar	pure_v4_argv.py	/^	import back_tar$/;"	i
+back_zip	pure_v4_argv.py	/^	import back_zip$/;"	i
+compress	back_tar.py	/^def compress(argv):$/;"	f
+compress	back_zip.py	/^def compress(argv):$/;"	f
+currentpath	FuncData.py	/^currentpath=os.getcwd()$/;"	v
+dirfile	FuncData.py	/^dirfile=currentpath+os.sep+'dir.dat'$/;"	v
+f	FuncData.py	/^	f=open(dirfile,'wb')$/;"	v
+f	FuncData.py	/^f=open(dirfile,'rb')$/;"	v
+flag	FuncData.py	/^flag=os.path.exists(dirfile)$/;"	v
+flag	pure_v4_argv.py	/^		flag=1$/;"	v
+flag	pure_v4_argv.py	/^flag=0$/;"	v
+modifyline	FuncData.py	/^def modifyline(filetitle,original,new):$/;"	f
+option	pure_v4_argv.py	/^option={'-v','-zip','-tar','-p'}# the options of the command line$/;"	v
+os	FuncData.py	/^import os$/;"	i
+os	back_tar.py	/^import os$/;"	i
+os	back_zip.py	/^import os$/;"	i
+os	pure_v4_argv.py	/^import os$/;"	i
+pickle	FuncData.py	/^import cPickle as pickle$/;"	i
+pth	pure_v4_argv.py	/^		pth=os.path.expanduser(raw_input('enter the abstract path you would like the the backup to stored-->'))$/;"	v
+setbackupdir	FuncData.py	/^def setbackupdir(pth):$/;"	f
+sys	pure_v4_argv.py	/^import sys$/;"	i
+target_dir	FuncData.py	/^	target_dir=os.path.abspath('backup'+os.sep)$/;"	v
+target_dir	FuncData.py	/^target_dir=pickle.load(f)$/;"	v
+time	FuncData.py	/^import time$/;"	i

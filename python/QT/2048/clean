@@ -1,0 +1,10 @@
+#! /bin/bash
+
+rm -rf build
+rm -rf __pycache__
+rm so2048.py
+rm so2048_wrap.c
+rm *so
+
+#swig -python so2048.i
+#python setup.py build_ext --inplace
