@@ -6,8 +6,13 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif ()
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_DEBUG "-g3 -O0")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+set(CUDA_NVCC_FLAGS "-std=c++11 -arch=sm_60")
+set(CUDA_NVCC_FLAGS_DEBUG "-G -O0")
+set(CUDA_NVCC_FLAGS_RELEASE "-O2")
+
+message (${CMAKE_BUILD_TYPE})
 
 
 # link_directories(/usr/local/cuda/lib64)

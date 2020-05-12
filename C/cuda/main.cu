@@ -22,16 +22,21 @@ __global__ void compute_square(const int num, const scalar_t* data, scalar_t* re
     }
 
     clock_t finish = clock();
-    time[tid] = (float)(finish - start) / CLOCKS_PER_SEC;
+    if (tid < num) {
+        time[tid] = (float)(finish - start) / CLOCKS_PER_SEC;
+    }
 }
 
 
 template<typename scalar_t>
 __global__ void compute_sum(const int num, const scalar_t* data, scalar_t* sum) {
-    const int tid = threadIdx.x + blockIdx.x * blockDim.x;
-    extern __shared__ scalar_t shared[]; // dynamic allocated
+    // dynamic allocated
+    extern __shared__ __align__(sizeof(scalar_t)) int shared_raw[]; 
+    scalar_t *shared = reinterpret_cast<scalar_t*>(shared_raw);
     shared[threadIdx.x] = 0; // assign 0 to the aligned memory
     __syncthreads();
+
+    const int tid = threadIdx.x + blockIdx.x * blockDim.x;
     if (tid < num) {
         shared[threadIdx.x] = data[tid];
     }
@@ -107,7 +112,6 @@ bool InitCUDA() {
 }
 
 
-// TODO: try long type
 void test_cuda_sync() {
     cout << "test sync" << endl;
     int len{1000};
@@ -118,8 +122,8 @@ void test_cuda_sync() {
     std::iota(data.begin(), data.end(), 0);
 
     // allocate memory
-    float *dev_data{nullptr}, *dev_res{nullptr}, *dev_sum{nullptr};
-    float *dev_time{nullptr};
+    float *dev_data{nullptr}, *dev_res{nullptr}, *dev_time{nullptr};
+    float *dev_sum{nullptr};
     cudaMalloc((void**)&dev_data, sizeof(float) * len);
     cudaMalloc((void**)&dev_res, sizeof(float) * len);
     cudaMalloc((void**)&dev_time, sizeof(float) * len);
@@ -131,9 +135,20 @@ void test_cuda_sync() {
 
     // execute kernel function
     dim3 block(512);
-    dim3 grid(std::min(4096, (int)std::ceil(len / 512.))); // be aware use float divide
-    compute_square<float><<<grid, block, 0>>>(len, dev_data, dev_res, dev_time);
-    compute_sum<float><<<grid, block, 2048>>>(len, dev_data, dev_sum); // sm must not be 0 if used, if not used can be 0
+    dim3 grid(std::min(4096, (int)std::ceil(len / 512.))); 
+    compute_square<float><<<grid, block, 4096>>>(len, dev_data, dev_res, dev_time);
+    compute_sum<float><<<grid, block, 4096>>>(len, dev_data, dev_sum);
+
+    /// test double type when instantiate template with two types
+    // 1. must add compilation option of -arch=sm_60 to support double
+    // 2. if to use dynamic shared memory, take care of its declaration
+    vector<double> datad(len);
+    vector<double> resd(len);
+    double *dev_datad{nullptr};
+    double *dev_sumd{nullptr};
+    cudaMalloc((void**)&dev_datad, sizeof(double) * len);
+    cudaMalloc((void**)&dev_sumd, sizeof(double));
+    compute_sum<double><<<grid, block, 4096>>>(len, dev_datad, dev_sumd);
 
     // copy results back to host
     cudaMemcpy(&res[0], dev_res, sizeof(int) * len, cudaMemcpyDeviceToHost);
